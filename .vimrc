@@ -8,3 +8,4 @@ colo nord
 set ts=4
 set sw=4
 set clipboard=unnamedplus
+autocmd BufEnter *.CPP :setlocal filetype=cpp
