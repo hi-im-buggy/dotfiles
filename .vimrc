@@ -12,7 +12,7 @@ Plug 'lervag/vimtex' "Latex plugin for vim
 Plug 'scrooloose/nerdTree' "Visual file tree plugin
 call plug#end()
 
-nmap <C-n> :NERDTreeToggle<CR> 
+nmap <C-b> :NERDTreeToggle<CR> 
 "
 "nord-vim customizations
 let g:nord_bold = 1
@@ -22,10 +22,19 @@ let g:nord_cursor_line_number_background = 1
 let g:nord_uniform_diff_background = 1
 
 "general settings
-set nu
-set rnu
-set autoindent
 colo nord
-set sw=4
+let mapleader=" "
+set number
+set relativenumber
+set autoindent
+set tabstop=4
+set softtabstop=4
+set expandtab "tabs->spaces
+set cursorline
+set wildmenu "visual command completion menu
 set clipboard=unnamedplus
-autocmd BufEnter *.CPP :setlocal filetype=cpp
+set incsearch 
+set ignorecase
+set smartcase
+syntax enable
+autocmd BufEnter *.CPP :setlocal filetype=cpp "Fix .CPP not autohighlighting syntax
