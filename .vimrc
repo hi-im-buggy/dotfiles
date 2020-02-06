@@ -33,6 +33,7 @@ set shiftwidth=4
 set expandtab "tabs->spaces
 set cursorline
 set wildmenu "visual command completion menu
+set path+=** "set vim to recursively look through subdirectories when dealing with filepaths
 set clipboard=unnamedplus
 set incsearch 
 set ignorecase
