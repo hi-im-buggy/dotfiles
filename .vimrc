@@ -38,5 +38,6 @@ set clipboard=unnamedplus
 set incsearch 
 set ignorecase
 set smartcase
+set spell
 syntax enable
 autocmd BufEnter *.CPP :setlocal filetype=cpp "Fix .CPP not autohighlighting syntax
