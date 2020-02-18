@@ -137,9 +137,18 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+##############################
+# Manual edits this point on #
+##############################
 
-# Manual edits this point on
+# Yakuake blur bug patch
 
+if [[ $(ps --no-header -p $PPID -o comm) =~ yakuake|konsole ]]; then
+        for wid in $(xdotool search --pid $PPID); do
+            xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
+fi
+
+# System Variables
 export EDITOR=/usr/bin/vim
 export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
 
