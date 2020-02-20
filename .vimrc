@@ -12,7 +12,7 @@ Plug 'lervag/vimtex' "Latex plugin for vim
 Plug 'scrooloose/nerdTree' "Visual file tree plugin
 call plug#end()
 
-nmap <C-b> :NERDTreeToggle<CR> 
+nmap <C-n> :NERDTreeToggle<CR> 
 "
 "nord-vim customizations
 let g:nord_bold = 1
@@ -27,10 +27,10 @@ let mapleader=" "
 set number
 set relativenumber
 set autoindent
-set tabstop=4
+set tabstop=8
 set softtabstop=4
 set shiftwidth=4
-set expandtab "tabs->spaces
+set noexpandtab
 set cursorline
 set wildmenu "visual command completion menu
 set path+=** "set vim to recursively look through subdirectories when dealing with filepaths
