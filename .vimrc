@@ -12,8 +12,6 @@ Plug 'lervag/vimtex' "Latex plugin for vim
 Plug 'scrooloose/nerdTree' "Visual file tree plugin
 call plug#end()
 
-nmap <C-n> :NERDTreeToggle<CR> 
-"
 "nord-vim customizations
 let g:nord_bold = 1
 let g:nord_italic = 1
@@ -40,4 +38,8 @@ set ignorecase
 set smartcase
 set spell
 syntax enable
-autocmd BufEnter *.CPP :setlocal filetype=cpp "Fix .CPP not autohighlighting syntax
+autocmd BufEnter *.CPP :setlocal filetype=cpp "Fix .CPP not auto highlighting syntax
+
+"General remaps
+nmap <leader>n :NERDTreeToggle<CR> 
+tmap <leader><ESC> <C-\><C-n>
