@@ -5,30 +5,51 @@
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
+local xrdb = xresources.get_current_theme()
 
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Source Sans Pro 10"
+theme.font          = "Proxima Nova 10"
 
-theme.bg_normal     = "#2e3440"
-theme.bg_focus      = "#4c566a"
-theme.bg_urgent     = "#E5E9F0"
-theme.bg_minimize   = "#3b4252"
+-- Nord color theme --
+-- theme.bg_normal     = "#2e3440"
+-- theme.bg_focus      = "#4c566a"
+-- theme.bg_urgent     = "#E5E9F0"
+-- theme.bg_minimize   = "#3b4252"
+-- theme.bg_systray    = theme.bg_normal
+
+-- theme.fg_normal     = "#e5e9f0"
+-- theme.fg_focus      = "#eceff4"
+-- theme.fg_urgent     = "#3b4252"
+-- theme.fg_minimize   = "#eceff4"
+
+-- theme.useless_gap   = dpi(8)
+-- theme.border_width  = dpi(2)
+-- theme.border_normal = "#2e3440"
+-- theme.border_focus  = "#e5e9f0"
+-- theme.border_marked = "#bf616a"
+
+-- pywal theme --
+
+theme.bg_normal     = xrdb.background
+theme.bg_focus      = xrdb.color1
+theme.bg_urgent     = xrdb.color16
+theme.bg_minimize   = xrdb.color1
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#e5e9f0"
-theme.fg_focus      = "#eceff4"
-theme.fg_urgent     = "#3b4252"
-theme.fg_minimize   = "#eceff4"
+theme.fg_normal     = xrdb.color6
+theme.fg_focus      = xrdb.foreground
+theme.fg_urgent     = xrdb.color4
+theme.fg_minimize   = xrdb.color8
 
-theme.useless_gap   = dpi(10)
+theme.useless_gap   = dpi(8)
 theme.border_width  = dpi(2)
-theme.border_normal = "#2e3440"
-theme.border_focus  = "#e5e9f0"
-theme.border_marked = "#bf616a"
+theme.border_normal = xrdb.background
+theme.border_focus  = xrdb.foreground
+theme.border_marked = xrdb.color6
 
 -- There are other variable sets
 -- overriding the default one when
@@ -97,7 +118,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar
 theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = "/home/buggy/Downloads/6SQd2cV.jpg"
+-- theme.wallpaper = "/home/buggy/Downloads/6SQd2cV.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."default/layouts/fairhw.png"

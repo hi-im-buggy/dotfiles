@@ -10,6 +10,7 @@ Plug 'christoomey/vim-tmux-navigator' "allows seamless navigation b/w vim and tm
 Plug 'chrisbra/Colorizer' "colorize hex codes
 Plug 'lervag/vimtex' "Latex plugin for vim
 Plug 'scrooloose/nerdTree' "Visual file tree plugin
+Plug 'dylanaraps/wal.vim' "pywal colorscheme enable
 call plug#end()
 
 "nord-vim customizations

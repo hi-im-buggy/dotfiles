@@ -151,6 +151,7 @@ fi
 # System Variables
 export EDITOR=/usr/bin/vim
 export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
+export PATH="/home/buggy/.local/bin:$PATH"
 
 # Custom Aliases
 
@@ -158,6 +159,8 @@ alias tbin='nc termbin.com 9999'
 alias tbincopy='nc termbin.com 9999 | xclip -selection c'
 
 # Startup commands
+(cat ~/.cache/wal/sequences &)
 
-eval "$(thefuck --alias)"
+# 'Smart' Caps Lock
+setxkbmap -option ctrl:nocaps
 xcape -e 'Control_L=Escape'
