@@ -137,12 +137,12 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+
 ##############################
 # Manual edits this point on #
 ##############################
 
 # Yakuake blur bug patch
-
 if [[ $(ps --no-header -p $PPID -o comm) =~ yakuake|konsole ]]; then
         for wid in $(xdotool search --pid $PPID); do
             xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
@@ -154,9 +154,9 @@ export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
 export PATH="/home/buggy/.local/bin:$PATH"
 
 # Custom Aliases
-
 alias tbin='nc termbin.com 9999'
 alias tbincopy='nc termbin.com 9999 | xclip -selection c'
+alias reddit='rtv --enable-media'
 
 # Startup commands
 (cat ~/.cache/wal/sequences &)
@@ -164,3 +164,9 @@ alias tbincopy='nc termbin.com 9999 | xclip -selection c'
 # 'Smart' Caps Lock
 setxkbmap -option ctrl:nocaps
 xcape -e 'Control_L=Escape'
+
+#pywal with nitrogen
+wal-scale() {
+    wal -n -i "$@"
+    nitrogen --set-scaled "$(< "${HOME}/.cache/wal/wal")"
+}

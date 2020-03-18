@@ -118,4 +118,4 @@ c.fonts.default_family = 'Source Code Pro Light'
 c.fonts.default_size = '10pt'
 
 #Load up the nord-qutebrowser theme
-config.source('nord-qutebrowser.py')
+config.source('qutewal.py')
