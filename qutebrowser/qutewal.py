@@ -44,7 +44,7 @@ if os.path.isfile(colors_absolute):
     c.colors.completion.fg = foreground
     # Background color of the selected completion item.
     # Type: QssColor
-    c.colors.completion.item.selected.bg = gray
+    c.colors.completion.item.selected.bg = magenta
     # Bottom border color of the selected completion item.
     # Type: QssColor
     c.colors.completion.item.selected.border.bottom = background
@@ -92,7 +92,7 @@ if os.path.isfile(colors_absolute):
     c.colors.hints.fg = background
     # Font color for the matched part of hints.
     # Type: QssColor
-    c.colors.hints.match.fg = blue
+    c.colors.hints.match.fg = magenta
     # Background color of the keyhint widget.
     # Type: QssColor
     c.colors.keyhint.bg = background
@@ -246,13 +246,13 @@ if os.path.isfile(colors_absolute):
     c.colors.tabs.odd.fg = foreground
     # Background color of selected even tabs.
     # Type: QtColor
-    c.colors.tabs.selected.even.bg = gray
+    c.colors.tabs.selected.even.bg = magenta
     # Foreground color of selected even tabs.
     # Type: QtColor
     c.colors.tabs.selected.even.fg = background
     # Background color of selected odd tabs.
     # Type: QtColor
-    c.colors.tabs.selected.odd.bg = gray
+    c.colors.tabs.selected.odd.bg = magenta
     # Foreground color of selected odd tabs.
     # Type: QtColor
     c.colors.tabs.selected.odd.fg = background

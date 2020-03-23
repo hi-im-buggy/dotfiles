@@ -34,12 +34,12 @@ theme.font          = "Proxima Nova 10"
 
 -- pywal theme --
 theme.bg_normal     = xrdb.background
-theme.bg_focus      = xrdb.color8
+theme.bg_focus      = xrdb.color5
 theme.bg_urgent     = xrdb.color2
 theme.bg_minimize   = xrdb.color1
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = xrdb.color6
+theme.fg_normal     = xrdb.color5
 theme.fg_focus      = xrdb.background
 theme.fg_urgent     = xrdb.color4
 theme.fg_minimize   = xrdb.color8
