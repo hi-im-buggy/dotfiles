@@ -117,5 +117,10 @@ c.fonts.default_family = 'Source Code Pro Light'
 # Type: String
 c.fonts.default_size = '10pt'
 
+#Hiding bars most of the time
+config.bind('xb', 'config-cycle statusbar.hide')
+config.bind('xt', 'config-cycle tabs.show always switching')
+config.bind('<Alt-m>',  "message-info 'Toggling desktop/mobile';; config-cycle content.headers.user_agent 'Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36'  'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'")
+
 #Load up the nord-qutebrowser theme
 config.source('qutewal.py')

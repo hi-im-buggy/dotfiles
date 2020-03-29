@@ -14,7 +14,10 @@ local theme = {}
 
 theme.font          = "Proxima Nova 10"
 
+----------------------
 -- Nord color theme --
+----------------------
+--
 -- theme.bg_normal     = "#2e3440"
 -- theme.bg_focus      = "#4c566a"
 -- theme.bg_urgent     = "#E5E9F0"
@@ -32,7 +35,10 @@ theme.font          = "Proxima Nova 10"
 -- theme.border_focus  = "#e5e9f0"
 -- theme.border_marked = "#bf616a"
 
+-----------------
 -- pywal theme --
+-----------------
+--
 theme.bg_normal     = xrdb.background
 theme.bg_focus      = xrdb.color5
 theme.bg_urgent     = xrdb.color2
@@ -144,7 +150,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+theme.icon_theme = arc
 
 return theme
 
