@@ -1,6 +1,6 @@
-#
-# ~/.bashrc
-#
+#############
+# ~/.bashrc #
+#############
 
 [[ $- != *i* ]] && return
 
@@ -149,7 +149,7 @@ if [[ $(ps --no-header -p $PPID -o comm) =~ yakuake|konsole ]]; then
 fi
 
 # System Variables
-export EDITOR=/usr/bin/vim
+export EDITOR="/usr/bin/vim"
 export PATH="$PATH:$(ruby -e 'puts Gem.user_dir')/bin"
 export PATH="/home/buggy/.local/bin:$PATH"
 
@@ -160,10 +160,6 @@ alias reddit='rtv --enable-media'
 
 # Startup commands
 (cat ~/.cache/wal/sequences &)
-
-# 'Smart' Caps Lock
-setxkbmap -option ctrl:nocaps
-xcape -e 'Control_L=Escape'
 
 #pywal with nitrogen
 wal-scale() {

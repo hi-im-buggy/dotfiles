@@ -575,3 +575,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostart applications along with Awesome
 
 awful.spawn.with_shell("compton")
+awful.spawn.with_shell("wal-scale wallpaper/clouds.png")
