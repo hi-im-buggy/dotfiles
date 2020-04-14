@@ -40,6 +40,7 @@ set smartcase
 set spell
 syntax enable
 autocmd BufEnter *.CPP :setlocal filetype=cpp "Fix .CPP not auto highlighting syntax
+set cm=blowfish2
 
 "General remaps
 nmap <leader>n :NERDTreeToggle<CR> 

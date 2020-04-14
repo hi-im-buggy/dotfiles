@@ -158,11 +158,22 @@ alias tbin='nc termbin.com 9999'
 alias tbincopy='nc termbin.com 9999 | xclip -selection c'
 alias reddit='rtv --enable-media'
 
-# Startup commands
-(cat ~/.cache/wal/sequences &)
-
 #pywal with nitrogen
 wal-scale() {
     wal -n -i "$@"
     nitrogen --set-scaled "$(< "${HOME}/.cache/wal/wal")"
 }
+
+# Startup commands
+(cat ~/.cache/wal/sequences &)
+
+#################################
+#	Message Of The Day	#
+#################################
+
+# figlet $USER '@' $HOSTNAME | lolcat
+# echo
+# fortune
+# echo
+# echo $(date)
+

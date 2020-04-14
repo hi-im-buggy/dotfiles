@@ -1,2 +1,3 @@
 wal -R &
 nitrogen --set-scaled "$(< "/usr/share/wallpaper/wal")" &
+batterymon -t gnome &
