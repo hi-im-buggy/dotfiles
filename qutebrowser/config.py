@@ -59,6 +59,30 @@ config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}) AppleWebKit/53
 # running qutebrowser version.  The default value is equal to the
 # unchanged user agent of QtWebKit/QtWebEngine.  Note that the value
 # read from JavaScript is always the global value.
+#
+####################
+# Purely Cosmetic
+####################
+padding = {"bottom":6, "left":2, "right":2, "top":6}
+
+
+c.fonts.default_family = "Cozette"
+c.fonts.default_size = "9pt"
+
+c.tabs.padding = padding
+c.tabs.position = "left"
+c.tabs.show = "always"
+c.tabs.title.format = "{index}"
+c.tabs.width = 34
+c.tabs.favicons.scale = 1.4
+c.tabs.indicator.width = 2
+c.tabs.indicator.padding = {"bottom":0, "left":0, "right":4, "top":0}
+c.tabs.background = False
+
+c.scrolling.smooth = True
+c.colors.webpage.prefers_color_scheme_dark = True
+
+####################
 # Type: FormatString
 config.set('content.headers.user_agent', 'Mozilla/5.0 ({os_info}; rv:71.0) Gecko/20100101 Firefox/71.0', 'https://docs.google.com/*')
 

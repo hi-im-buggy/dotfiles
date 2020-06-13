@@ -157,6 +157,8 @@ export PATH="/home/buggy/.local/bin:$PATH"
 alias tbin='nc termbin.com 9999'
 alias tbincopy='nc termbin.com 9999 | xclip -selection c'
 alias reddit='rtv --enable-media'
+alias assaultcube='~/AssaultCube_v1.2.0.2/assaultcube.sh'
+alias pomo='muccadoro | tee -ai ~/pomodoros.txt'
 
 #pywal with nitrogen
 wal-scale() {
@@ -166,6 +168,8 @@ wal-scale() {
 
 # Startup commands
 (cat ~/.cache/wal/sequences &)
+source ~/spotify_creds.sh
+source ~/youtube_api_creds.sh
 
 #################################
 #	Message Of The Day	#

@@ -51,7 +51,7 @@ theme.fg_urgent     = xrdb.color4
 theme.fg_minimize   = xrdb.color8
 
 theme.useless_gap   = dpi(8)
-theme.border_width  = dpi(2)
+theme.border_width  = dpi(0)
 theme.border_normal = xrdb.background
 theme.border_focus  = xrdb.foreground
 theme.border_marked = xrdb.color6
@@ -150,7 +150,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = arc
+theme.icon_theme = Adwaita
 
 return theme
 

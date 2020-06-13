@@ -249,15 +249,19 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
+    awful.key({ modkey,           }, "w", function () 
+	awful.util.spawn("rofi -show window -fake-transparency")
+    end,
+              {description = "rofi window switcher", group = "rofi launcher"}),
 
   -- Brightness
 
-    awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.util.spawn("xbacklight -dec 5") end),
-    awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.util.spawn("xbacklight -inc 5") end),
+    awful.key({	modkey,		 }, "[", function ()
+        awful.util.spawn("xbacklight -dec 5") end,
+	{description = "decrease screen brightness", group = "laptop"}),
+    awful.key({	modkey,		 }, "]", function ()
+        awful.util.spawn("xbacklight -inc 5") end,
+	{description = "increase screen brightness", group = "laptop"}),
 
    -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
@@ -319,7 +323,7 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show run") end,
+    awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show run -fake-transparency") end,
               {description = "rofi", group = "rofi launcher"}),
 
     awful.key({ modkey }, "x",
@@ -581,5 +585,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart applications along with Awesome
 
-awful.spawn.with_shell("compton")
+awful.spawn.with_shell("picom -b")
 awful.spawn.with_shell("wal-scale wallpaper/clouds.png")
