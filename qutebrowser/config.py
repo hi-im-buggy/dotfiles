@@ -67,14 +67,14 @@ padding = {"bottom":6, "left":2, "right":2, "top":6}
 
 
 c.fonts.default_family = "Cozette"
-c.fonts.default_size = "9pt"
+c.fonts.default_size = "8pt"
 
 c.tabs.padding = padding
 c.tabs.position = "left"
 c.tabs.show = "always"
 c.tabs.title.format = "{index}"
-c.tabs.width = 34
-c.tabs.favicons.scale = 1.4
+c.tabs.width = 28
+c.tabs.favicons.scale = 1.3
 c.tabs.indicator.width = 2
 c.tabs.indicator.padding = {"bottom":0, "left":0, "right":4, "top":0}
 c.tabs.background = False
@@ -139,12 +139,21 @@ c.fonts.default_family = 'Source Code Pro Light'
 # either a float value with a "pt" suffix, or an integer value with a
 # "px" suffix.
 # Type: String
-c.fonts.default_size = '10pt'
+c.fonts.default_size = '8pt'
 
 #Hiding bars most of the time
 config.bind('xb', 'config-cycle statusbar.hide')
 config.bind('xt', 'config-cycle tabs.show always switching')
 config.bind('<Alt-m>',  "message-info 'Toggling desktop/mobile';; config-cycle content.headers.user_agent 'Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36'  'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) {qt_key}/{qt_version} {upstream_browser_key}/{upstream_browser_version} Safari/{webkit_version}'")
 
-#Load up the nord-qutebrowser theme
+#Set keybindings for opening links in mpv
+config.bind(',m', 'spawn mpv {url}')
+config.bind(',M', 'hint links spawn mpv {hint-url}')
+config.bind(',n', 'spawn st -e mpv --vid=no {url}')
+config.bind(',N', 'hint links spawn st -e mpv --vid=no {hint-url}')
+
+#Set up the external editor to work with st and vim
+c.editor.command=["st", "-e", "vim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
+
+#Load up the theme
 config.source('qutewal.py')

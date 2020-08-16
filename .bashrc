@@ -159,6 +159,7 @@ alias tbincopy='nc termbin.com 9999 | xclip -selection c'
 alias reddit='rtv --enable-media'
 alias assaultcube='~/AssaultCube_v1.2.0.2/assaultcube.sh'
 alias pomo='muccadoro | tee -ai ~/pomodoros.txt'
+alias yt='straw-viewer'
 
 #pywal with nitrogen
 wal-scale() {

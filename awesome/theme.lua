@@ -50,7 +50,7 @@ theme.fg_focus      = xrdb.background
 theme.fg_urgent     = xrdb.color4
 theme.fg_minimize   = xrdb.color8
 
-theme.useless_gap   = dpi(8)
+theme.useless_gap   = dpi(5)
 theme.border_width  = dpi(0)
 theme.border_normal = xrdb.background
 theme.border_focus  = xrdb.foreground
