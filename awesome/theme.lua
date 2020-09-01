@@ -17,48 +17,48 @@ theme.font          = "Proxima Nova 10"
 ----------------------
 -- Nord color theme --
 ----------------------
---
--- theme.bg_normal     = "#2e3440"
--- theme.bg_focus      = "#4c566a"
--- theme.bg_urgent     = "#E5E9F0"
--- theme.bg_minimize   = "#3b4252"
--- theme.bg_systray    = theme.bg_normal
 
--- theme.fg_normal     = "#e5e9f0"
--- theme.fg_focus      = "#eceff4"
--- theme.fg_urgent     = "#3b4252"
--- theme.fg_minimize   = "#eceff4"
+ theme.bg_normal     = "#0D131F33"
+ theme.bg_focus      = theme.fg_normal 
+ theme.bg_urgent     = "#E5E9F077"
+ theme.bg_minimize   = theme.bg_normal
+ theme.bg_systray    = theme.bg_normal
 
--- theme.useless_gap   = dpi(8)
--- theme.border_width  = dpi(2)
--- theme.border_normal = "#2e3440"
--- theme.border_focus  = "#e5e9f0"
--- theme.border_marked = "#bf616a"
+ theme.fg_normal     = "#D8DEE999"
+ theme.fg_focus      = "#E5E9F0FF"
+ theme.fg_urgent     = "#BF616ADD"
+ theme.fg_minimize   = "#5E81AC55"
+
+ theme.useless_gap   = dpi(8)
+ theme.border_width  = dpi(0)
+ theme.border_normal = "#2e3440"
+ theme.border_focus  = "#e5e9f0"
+ theme.border_marked = "#bf616a"
 
 -----------------
 -- pywal theme --
 -----------------
---
-theme.bg_normal     = xrdb.background
-theme.bg_focus      = xrdb.color5
-theme.bg_urgent     = xrdb.color2
-theme.bg_minimize   = xrdb.color1
-theme.bg_systray    = theme.bg_normal
+----
+--theme.bg_normal     = xrdb.background
+--theme.bg_focus      = xrdb.color5
+--theme.bg_urgent     = xrdb.color2
+--theme.bg_minimize   = xrdb.color1
+--theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = xrdb.color5
-theme.fg_focus      = xrdb.background
-theme.fg_urgent     = xrdb.color4
-theme.fg_minimize   = xrdb.color8
+--theme.fg_normal     = xrdb.color5
+--theme.fg_focus      = xrdb.background
+--theme.fg_urgent     = xrdb.color4
+--theme.fg_minimize   = xrdb.color8
 
-theme.useless_gap   = dpi(5)
-theme.border_width  = dpi(0)
-theme.border_normal = xrdb.background
-theme.border_focus  = xrdb.foreground
-theme.border_marked = xrdb.color6
+--theme.useless_gap   = dpi(5)
+--theme.border_width  = dpi(0)
+--theme.border_normal = xrdb.background
+--theme.border_focus  = xrdb.foreground
+--theme.border_marked = xrdb.color6
 
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
+---- There are other variable sets
+---- overriding the default one when
+---- defined, the sets are:
 -- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
 -- tasklist_[bg|fg]_[focus|urgent]
 -- titlebar_[bg|fg]_[normal|focus]

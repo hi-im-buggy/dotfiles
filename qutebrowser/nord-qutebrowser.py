@@ -275,19 +275,7 @@ c.colors.statusbar.url.warn.fg = nord['nord12']
 
 ## Background color of the tab bar.
 ## Type: QtColor
-c.colors.tabs.bar.bg = nord['nord3']
-
-## Background color of unselected even tabs.
-## Type: QtColor
-c.colors.tabs.even.bg = nord['nord3']
-
-## Foreground color of unselected even tabs.
-## Type: QtColor
-c.colors.tabs.even.fg = nord['nord5']
-
-## Color for the tab indicator on errors.
-## Type: QtColor
-c.colors.tabs.indicator.error = nord['nord11']
+c.colors.tabs.bar.bg = nord['nord0']
 
 ## Color gradient start for the tab indicator.
 ## Type: QtColor
@@ -306,29 +294,41 @@ c.colors.tabs.indicator.error = nord['nord11']
 ##   - none: Don't show a gradient.
 c.colors.tabs.indicator.system = 'none'
 
+## Color for the tab indicator on errors.
+## Type: QtColor
+c.colors.tabs.indicator.error = nord['nord11']
+
+## Background color of unselected even tabs.
+## Type: QtColor
+c.colors.tabs.even.bg = nord['nord0']
+
+## Foreground color of unselected even tabs.
+## Type: QtColor
+c.colors.tabs.even.fg = nord['nord2']
+
 ## Background color of unselected odd tabs.
 ## Type: QtColor
-c.colors.tabs.odd.bg = nord['nord3']
+c.colors.tabs.odd.bg = nord['nord0']
 
 ## Foreground color of unselected odd tabs.
 ## Type: QtColor
-c.colors.tabs.odd.fg = nord['nord5']
+c.colors.tabs.odd.fg = nord['nord2']
 
 # ## Background color of selected even tabs.
 # ## Type: QtColor
-c.colors.tabs.selected.even.bg = nord['nord0']
+c.colors.tabs.selected.even.bg = nord['nord3']
 
 # ## Foreground color of selected even tabs.
 # ## Type: QtColor
-c.colors.tabs.selected.even.fg = nord['nord5']
+c.colors.tabs.selected.even.fg = nord['nord1']
 
 # ## Background color of selected odd tabs.
 # ## Type: QtColor
-c.colors.tabs.selected.odd.bg = nord['nord0']
+c.colors.tabs.selected.odd.bg = nord['nord3']
 
 # ## Foreground color of selected odd tabs.
 # ## Type: QtColor
-c.colors.tabs.selected.odd.fg = nord['nord5']
+c.colors.tabs.selected.odd.fg = nord['nord1']
 
 ## Background color for webpages if unset (or empty to use the theme's
 ## color)

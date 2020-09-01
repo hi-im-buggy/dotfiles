@@ -156,4 +156,4 @@ config.bind(',N', 'hint links spawn st -e mpv --vid=no {hint-url}')
 c.editor.command=["st", "-e", "vim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
 
 #Load up the theme
-config.source('qutewal.py')
+config.source('nord-qutebrowser.py')
