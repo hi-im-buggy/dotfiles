@@ -168,9 +168,7 @@ wal-scale() {
 }
 
 # Startup commands
-(cat ~/.cache/wal/sequences &)
-source ~/spotify_creds.sh
-source ~/youtube_api_creds.sh
+#(cat ~/.cache/wal/sequences &)
 
 #################################
 #	Message Of The Day	#

@@ -22,6 +22,9 @@ let g:nord_uniform_diff_background = 1
 
 let g:tex_flavor = 'latex'
 
+"markdown
+let g:markdown_fenced_languages = ['bash', 'c', 'asm']
+
 "general settings
 colo nord
 let mapleader=" "
