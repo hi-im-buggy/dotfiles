@@ -155,5 +155,14 @@ config.bind(',N', 'hint links spawn st -e mpv --vid=no {hint-url}')
 #Set up the external editor to work with st and vim
 c.editor.command=["st", "-e", "vim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
 
+#Darkmode settings
+c.colors.webpage.darkmode.enabled = False
+c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
+c.colors.webpage.darkmode.contrast = 0.0
+c.colors.webpage.darkmode.policy.images= 'never'
+c.colors.webpage.darkmode.policy.page = 'smart'
+c.colors.webpage.darkmode.threshold.background = 0
+c.colors.webpage.darkmode.threshold.text = 256 
+
 #Load up the theme
 config.source('nord-qutebrowser.py')
