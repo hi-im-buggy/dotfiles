@@ -15,10 +15,10 @@ local theme = {}
 theme.font          = "Proxima Nova 10"
 
 ----------------------
--- Nord color theme --
+-- Dark translucent color theme --
 ----------------------
 
- theme.bg_normal     = "#0D131F33"
+ theme.bg_normal     = "#0D131F77"
  theme.bg_focus      = theme.fg_normal 
  theme.bg_urgent     = "#E5E9F077"
  theme.bg_minimize   = theme.bg_normal
@@ -30,7 +30,7 @@ theme.font          = "Proxima Nova 10"
  theme.fg_minimize   = "#5E81AC55"
 
  theme.useless_gap   = dpi(8)
- theme.border_width  = dpi(0)
+ theme.border_width  = dpi(2)
  theme.border_normal = "#2e3440"
  theme.border_focus  = "#e5e9f0"
  theme.border_marked = "#bf616a"

@@ -9,3 +9,7 @@ ln -s ~/dotfiles/.xinitrc ~/.xinitrc
 ln -s ~/dotfiles/.xprofile ~/.xprofile
 ln -s ~/dotfiles/awesome/rc.lua ~/.config/awesome/rc.lua 
 ln -s ~/dotfiles/awesome/theme.lua ~/.config/awesome/theme.lua 
+ln -s ~/dotfiles/rofi/config.rasi ~/.config/rofi/config.rasi
+ln -s ~/dotfiles/picom.conf ~/.config/picom.conf
+ln -s ~/dotfiles/qutebrowser/config.py ~/.config/qutebrowser/config.py
+ln -s ~/dotfiles/qutebrowser/nord-qutebrowser.py ~/.config/qutebrowser/nord-qutebrowser.py

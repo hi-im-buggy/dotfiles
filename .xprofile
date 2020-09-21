@@ -1,5 +1,4 @@
 batterymon -t gnome &
 volumeicon &
 nm-applet &
-wal -R &
-/home/buggy/.fehbg &
+variety &

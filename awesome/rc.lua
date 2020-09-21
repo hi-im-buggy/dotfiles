@@ -14,6 +14,11 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+-- Additional widgets from streetturtle/awesome-wm-widgets
+local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -48,7 +53,7 @@ end
 beautiful.init("/home/buggy/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "st"
+terminal = "alacritty"
 editor = "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -209,8 +214,10 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
             wibox.widget.systray(),
+	    brightness_widget(),
+	    volume_widget({display_notification = true}),
+	    battery_widget(),
             mytextclock,
             s.mylayoutbox,
         },
@@ -254,13 +261,40 @@ globalkeys = gears.table.join(
     end,
               {description = "rofi window switcher", group = "rofi launcher"}),
 
+  -- Volume control
+  awful.key(
+    {},
+    'XF86AudioRaiseVolume',
+    volume_widget.raise,
+    {description = 'volume up', group = 'hotkeys'}
+  ),
+  awful.key(
+    {},
+    'XF86AudioLowerVolume',
+    volume_widget.lower,
+    {description = 'volume down', group = 'hotkeys'}
+  ),
+  awful.key(
+    {},
+    'XF86AudioMute',
+    volume_widget.toggle,
+    {description = 'toggle mute', group = 'hotkeys'}
+  ),
+
   -- Brightness
 
     awful.key({	modkey,		 }, "[", function ()
-        awful.util.spawn("xbacklight -dec 5") end,
+        awful.util.spawn("light -U 5") end,
 	{description = "decrease screen brightness", group = "laptop"}),
     awful.key({	modkey,		 }, "]", function ()
-        awful.util.spawn("xbacklight -inc 5") end,
+        awful.util.spawn("light -A 5") end,
+	{description = "increase screen brightness", group = "laptop"}),
+	
+    awful.key({			 }, "XF86MonBrightnessDown", function ()
+        awful.util.spawn("light -U 5") end,
+	{description = "decrease screen brightness", group = "laptop"}),
+    awful.key({			 }, "XF86MonBrightnessUp", function ()
+        awful.util.spawn("light -A 5") end,
 	{description = "increase screen brightness", group = "laptop"}),
 
    -- Layout manipulation
@@ -585,4 +619,3 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart applications along with Awesome
 awful.spawn.with_shell("picom -b")
-awful.spawn.with_shell("wal-scale wallpaper/clouds.png")
