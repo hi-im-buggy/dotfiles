@@ -11,6 +11,7 @@ Plug 'chrisbra/Colorizer' "colorize hex codes
 Plug 'lervag/vimtex' "Latex plugin for vim
 Plug 'scrooloose/nerdTree' "Visual file tree plugin
 Plug 'dylanaraps/wal.vim' "pywal colorscheme enable
+Plug 'triglav/vim-visual-increment' " <C-v> <C-a> to increment a visual block
 call plug#end()
 
 "nord-vim customizations
@@ -20,10 +21,12 @@ let g:nord_italic_comments = 1
 let g:nord_cursor_line_number_background = 1
 let g:nord_uniform_diff_background = 1
 
+"LaTeX
 let g:tex_flavor = 'latex'
 
 "markdown
 let g:markdown_fenced_languages = ['bash', 'c', 'asm', 'lua', 'python', 'html', 'css']
+let g:vim_markdown_math = 1
 
 "general settings
 colo nord
@@ -43,10 +46,15 @@ set incsearch
 set ignorecase
 set smartcase
 set spell
+set title
 syntax enable
 autocmd BufEnter *.CPP :setlocal filetype=cpp "Fix .CPP not auto highlighting syntax
 set cm=blowfish2
 
 "General remaps
+inoremap <M-Space> <ESC>
+inoremap jj <ESC>
 nmap <leader>n :NERDTreeToggle<CR> 
 tmap <leader><ESC> <C-\><C-n>
+tmap <M-Space> <C-\><C-n>
+

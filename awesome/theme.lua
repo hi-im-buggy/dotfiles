@@ -1,5 +1,5 @@
 ---------------------------
--- Default awesome theme --
+-- Buggy's awesome theme --
 ---------------------------
 
 local theme_assets = require("beautiful.theme_assets")
@@ -14,22 +14,29 @@ local theme = {}
 
 theme.font          = "Proxima Nova 10"
 
-----------------------
+----------------------------------
 -- Dark translucent color theme --
-----------------------
+----------------------------------
 
- theme.bg_normal     = "#0D131F77"
+ theme.bg_normal     = "#0D131FA7"
  theme.bg_focus      = theme.fg_normal 
  theme.bg_urgent     = "#E5E9F077"
- theme.bg_minimize   = theme.bg_normal
+ theme.bg_minimize   = "#0D131F00"
  theme.bg_systray    = theme.bg_normal
 
  theme.fg_normal     = "#D8DEE999"
  theme.fg_focus      = "#E5E9F0FF"
  theme.fg_urgent     = "#BF616ADD"
- theme.fg_minimize   = "#5E81AC55"
+ theme.fg_minimize   = "#5E81AC95"
 
- theme.useless_gap   = dpi(8)
+ -- theme.taglist_bg_empty     = theme.bg_normal
+ -- theme.taglist_bg_occupied  = theme.bg_normal
+ theme.tasklist_bg_normal   =  "#0D131F00"
+ theme.tasklist_bg_focus    = "#0D131F00"
+ 
+ theme.taglist_fg_empty     = theme.fg_minimize
+
+ theme.useless_gap   = dpi(4)
  theme.border_width  = dpi(2)
  theme.border_normal = "#2e3440"
  theme.border_focus  = "#e5e9f0"

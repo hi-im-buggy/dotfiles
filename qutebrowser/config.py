@@ -149,11 +149,11 @@ config.bind('<Alt-m>',  "message-info 'Toggling desktop/mobile';; config-cycle c
 #Set keybindings for opening links in mpv
 config.bind(',m', 'spawn mpv {url}')
 config.bind(',M', 'hint links spawn mpv {hint-url}')
-config.bind(',n', 'spawn st -e mpv --vid=no {url}')
-config.bind(',N', 'hint links spawn st -e mpv --vid=no {hint-url}')
+config.bind(',n', 'spawn alacritty -e mpv --vid=no {url}')
+config.bind(',N', 'hint links spawn alacritty -e mpv --vid=no {hint-url}')
 
-#Set up the external editor to work with st and vim
-c.editor.command=["st", "-e", "vim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
+#Set up the external editor to work with alacritty and vim
+c.editor.command=["alacritty", "-e", "vim", "-f", "{file}", "-c", "normal {line}G{column0}l"]
 
 #Darkmode settings
 c.colors.webpage.darkmode.enabled = False

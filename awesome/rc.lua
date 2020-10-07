@@ -15,9 +15,9 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Additional widgets from streetturtle/awesome-wm-widgets
-local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
-local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+local volumearc_widget = require("awesome-wm-widgets.volumearc-widget.volumearc")
+local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+local brightnessarc_widgetidget = require("awesome-wm-widgets.brightnessarc-widget.brightnessarc")
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -213,11 +213,12 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
+	    spacing = 6,
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-	    brightness_widget(),
-	    volume_widget({display_notification = true}),
-	    battery_widget(),
+	    brightnessarc_widgetidget(),
+	    volumearc_widget({display_notification = true}),
+	    batteryarc_widget({ }),
             mytextclock,
             s.mylayoutbox,
         },
@@ -262,24 +263,27 @@ globalkeys = gears.table.join(
               {description = "rofi window switcher", group = "rofi launcher"}),
 
   -- Volume control
-  awful.key(
-    {},
-    'XF86AudioRaiseVolume',
-    volume_widget.raise,
-    {description = 'volume up', group = 'hotkeys'}
-  ),
-  awful.key(
-    {},
-    'XF86AudioLowerVolume',
-    volume_widget.lower,
-    {description = 'volume down', group = 'hotkeys'}
-  ),
-  awful.key(
-    {},
-    'XF86AudioMute',
-    volume_widget.toggle,
-    {description = 'toggle mute', group = 'hotkeys'}
-  ),
+  -- awful.key(
+  --   {},
+  --   'XF86AudioRaiseVolume', function()
+  --   awful.util.spawn("amixer -D pulse sset Master 5 %+")
+-- end,
+  --   {description = 'volume up', group = 'hotkeys'}
+  -- ),
+  -- awful.key(
+  --   {},
+  --   'XF86AudioLowerVolume', function()
+  --   awful.util.spawn("amixer -D pulse sset Master 5 %-") 
+-- end,
+  --   {description = 'volume down', group = 'hotkeys'}
+  -- ),
+  -- awful.key(
+  --   {},
+  --   'XF86AudioMute', function()
+  --   awful.util.spawn("amixer -D pulse sset Master toggle") 
+-- end,
+  --   {description = 'toggle mute', group = 'hotkeys'}
+  -- ),
 
   -- Brightness
 
