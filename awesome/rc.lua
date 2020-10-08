@@ -203,6 +203,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
+    -- Create the systray
+    s.systray = wibox.widget.systray()
+    s.systray.visible = false
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -215,7 +219,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
 	    spacing = 6,
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
+            s.systray,
 	    brightnessarc_widgetidget(),
 	    volumearc_widget({display_notification = true}),
 	    batteryarc_widget({ }),
@@ -285,6 +289,17 @@ globalkeys = gears.table.join(
   --   {description = 'toggle mute', group = 'hotkeys'}
   -- ),
 
+  -- Lockscreen
+
+    awful.key({ modkey, "Control" }, "l", function ()
+	awful.util.spawn("i3lock-fancy-rapid 3 10") end,
+	{description = "lock the screen", group = "laptop"}),
+
+	-- Systray toggle
+    awful.key({ modkey }, "=", function ()
+	awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible end, 
+	{description = "Toggle systray visibility", group = "custom"}),
+
   -- Brightness
 
     awful.key({	modkey,		 }, "[", function ()
@@ -301,7 +316,23 @@ globalkeys = gears.table.join(
         awful.util.spawn("light -A 5") end,
 	{description = "increase screen brightness", group = "laptop"}),
 
-   -- Layout manipulation
+    -- Keyboard backlight
+    awful.key({	modkey,	"Control" }, "[", function ()
+        awful.util.spawn("light -U 35 -s sysfs/leds/asus::kbd_backlight") end,
+	{description = "decrease keyboard backlight", group = "laptop"}),
+    awful.key({	modkey, "Control" }, "]", function ()
+        awful.util.spawn("light -A 35 -s sysfs/leds/asus::kbd_backlight") end,
+	{description = "increase keyboard backlight", group = "laptop"}),
+	
+    -- Volume
+    awful.key({			}, "XF86AudioLowerVolume", function ()
+	awful.util.spawn("amixer -D pulse sset Master 5%-") end,
+	{description = "decrease audio volume", group = "laptop"}),
+    awful.key({			}, "XF86AudioRaiseVolume", function ()
+	awful.util.spawn("amixer -D pulse sset Master 5%+") end,
+	{description = "increase audio volume", group = "laptop"}),
+
+    -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end,
@@ -623,3 +654,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart applications along with Awesome
 awful.spawn.with_shell("picom -b")
+awful.spawn.with_shell("~/.config/awesome/locker.sh")
+awful.spawn.with_shell("variety &")
+awful.spawn.with_shell("nm-applet &")

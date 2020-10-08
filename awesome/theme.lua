@@ -42,6 +42,9 @@ theme.font          = "Proxima Nova 10"
  theme.border_focus  = "#e5e9f0"
  theme.border_marked = "#bf616a"
 
+ theme.hotkeys_bg = "#2E3440EE"
+ theme.hotkeys_modifiers_fg = "#D8DEE9DD" 
+ 
 -----------------
 -- pywal theme --
 -----------------
