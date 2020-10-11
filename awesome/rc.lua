@@ -18,6 +18,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local volumearc_widget = require("awesome-wm-widgets.volumearc-widget.volumearc")
 local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 local brightnessarc_widgetidget = require("awesome-wm-widgets.brightnessarc-widget.brightnessarc")
+local spotify_widget = require("awesome-wm-widgets.spotify-widget.spotify")
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
@@ -217,9 +218,16 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
+		spotify_widget({
+			play_icon = '/usr/share/icons/Papirus-Light/24x24/categories/spotify.svg',
+			pause_icon = '/usr/share/icons/Papirus-Dark/24x24/panel/spotify-indicator.svg',
+			dim_when_paused = true,
+			dim_opacity = 0.5,
+			max_length = -1,	
+		}),
 	    spacing = 6,
-            layout = wibox.layout.fixed.horizontal,
-            s.systray,
+		layout = wibox.layout.fixed.horizontal,
+		s.systray,
 	    brightnessarc_widgetidget(),
 	    volumearc_widget({display_notification = true}),
 	    batteryarc_widget({ }),
