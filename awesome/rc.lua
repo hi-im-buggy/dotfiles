@@ -219,8 +219,6 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
 		spotify_widget({
-			play_icon = '/usr/share/icons/Papirus-Light/24x24/categories/spotify.svg',
-			pause_icon = '/usr/share/icons/Papirus-Dark/24x24/panel/spotify-indicator.svg',
 			dim_when_paused = true,
 			dim_opacity = 0.5,
 			max_length = -1,	
@@ -662,6 +660,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart applications along with Awesome
 awful.spawn.with_shell("picom -b")
-awful.spawn.with_shell("~/.config/awesome/locker.sh")
-awful.spawn.with_shell("variety &")
 awful.spawn.with_shell("nm-applet &")
+awful.spawn.with_shell("variety &")

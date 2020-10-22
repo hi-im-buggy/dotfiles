@@ -42,6 +42,12 @@ if exists('+termguicolors')
 	set termguicolors
 endif
 
+" UTF-8 support
+if exists('+multi_byte')
+	scriptencoding utf-8
+	set encoding=utf-8
+endif
+
 "general settings
 set background=dark
 colo nord
@@ -61,7 +67,7 @@ set smartcase
 set spell
 set title
 set nolist
-set listchars=eol:¬,tab:\|\ >,trail:~,space:·
+set listchars=eol:$,tab:\|\ >,trail:~,space:+
 syntax enable
 set cm=blowfish2
 filetype plugin on
@@ -74,6 +80,7 @@ nmap <leader>n :NERDTreeToggle<CR>
 tmap <leader><ESC> <C-\><C-n>
 tmap <M-Space> <C-\><C-n>
 nmap <leader>l :set list!<CR>
+nmap <leader>z z=1<CR><CR>
 
 "nord-vim customizations
 let g:nord_bold = 1
@@ -88,8 +95,7 @@ let g:solarized_termcolors = 256
 
 "airline settings
 let g:airline#extensions#whitespace#checks =
-\  [ 'indent', 'trailing', 'mixed-indent-file', 'conflicts' ]
-let g:airline#extensions#whitespace#mixed_indent_algo = 1
+\  [ 'indent', 'trailing', 'conflicts' ]
 
 "ALE settings
 let g:ale_lint_on_enter = 0
