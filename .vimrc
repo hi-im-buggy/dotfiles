@@ -76,11 +76,13 @@ set omnifunc=syntaxcomplete#Complete
 "General remaps
 inoremap <M-Space> <ESC>
 inoremap jj <ESC>
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 nmap <leader>n :NERDTreeToggle<CR>
 tmap <leader><ESC> <C-\><C-n>
 tmap <M-Space> <C-\><C-n>
 nmap <leader>l :set list!<CR>
 nmap <leader>z z=1<CR><CR>
+nmap <leader>y :%!xclip -sel 'clipboard'<CR>u
 
 "nord-vim customizations
 let g:nord_bold = 1
