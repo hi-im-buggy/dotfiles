@@ -74,9 +74,9 @@ awful.layout.layouts = {
     awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
-    -- awful.layout.suit.spiral,
+    awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
+    awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
     awful.layout.suit.corner.nw,
@@ -561,9 +561,9 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-	  "feh",
-	  "mpv",
-	  "qjackctl",
+          "feh",
+          "mpv",
+          "qjackctl",
           "xtightvncviewer"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -662,3 +662,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.spawn.with_shell("picom -b")
 awful.spawn.with_shell("nm-applet &")
 awful.spawn.with_shell("variety &")
+-- awful.spawn.with_shell("redshift &")

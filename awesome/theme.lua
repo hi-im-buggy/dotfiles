@@ -12,7 +12,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Proxima Nova 10"
+theme.font          = "Noto Sans 10"
 
 ----------------------------------
 -- Dark translucent color theme --

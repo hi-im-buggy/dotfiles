@@ -144,4 +144,3 @@ configuration {
 	me-accept-entry: "MouseDPrimary";
 	me-accept-custom: "Control+MouseDPrimary";
 }
-@import "/home/buggy/.local/share/rofi/themes/onedark.rasi"
