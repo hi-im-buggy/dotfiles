@@ -175,7 +175,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ " I ", " II ", " III ", " IV ", " V ", " VI ", " VII ", " VIII ", " IX " }, s, awful.layout.layouts[1])
+    -- awful.tag({ " I ", " II ", " III ", " IV ", " V ", " VI ", " VII ", " VIII ", " IX " }, s, awful.layout.layouts[1])
+    awful.tag({ " I ", " II ", " III ", " IV ", " V "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -540,7 +541,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.centered+awful.placement.no_overlap+awful.placement.no_offscreen
      }
     },
 
@@ -663,4 +664,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.spawn.with_shell("picom -b")
 awful.spawn.with_shell("nm-applet &")
 awful.spawn.with_shell("variety &")
--- awful.spawn.with_shell("redshift &")
+awful.spawn.with_shell("ibus-daemon -d")

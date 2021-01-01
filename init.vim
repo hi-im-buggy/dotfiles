@@ -1,5 +1,4 @@
-call plug#begin('~/.vim/bundle')
-
+call plug#begin('~/.config/nvim/bundle')
 "Plugin manager
 	Plug 'junegunn/vim-plug'
 "lean statusbar
@@ -30,6 +29,8 @@ call plug#begin('~/.vim/bundle')
 	Plug 'arcticicestudio/nord-vim'
 "onedark colorscheme
 	Plug 'joshdick/onedark.vim'
+"gruvbox colorscheme
+	Plug 'lifepillar/vim-gruvbox8'
 "Missing motion for vim
 	Plug 'justinmk/vim-sneak'
 "<C-v> <C-a> to increment a visual block
@@ -43,20 +44,10 @@ call plug#begin('~/.vim/bundle')
 	Plug 'frazrepo/vim-rainbow'
 "racket plugin
 	Plug 'wlangstroth/vim-racket'
-
-if has('nvim')
-"Deoplete - Dark Powered Neo-Completion
-	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Deoplete for C/C++
-	Plug 'zchee/deoplete-clang'
-"nvim lsp
-	Plug 'neovim/nvim-lspconfig'
-endif
-
 call plug#end()
 
 " load custom 'plugins'
-runtime autoload/redir.vim
+source ~/.config/nvim/redir.vim
 
 "true color terminals
 if exists('+termguicolors')
@@ -72,32 +63,22 @@ if exists('+multi_byte')
 endif
 
 "general settings
-set nocompatible
-set background=dark
-colo onedark
+set nocp
+set title background=dark
 let mapleader=" "
-set number
-set relativenumber
-set autoindent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set number relativenumber
+set autoindent tabstop=4 softtabstop=4 shiftwidth=4
 set cursorline
 set wildmenu "visual command completion menu
-set path+=/home/buggy
+set path+=src/**,config/
 set clipboard=unnamedplus
-set incsearch
-set nohlsearch
-set ignorecase
-set smartcase
-set nospell
+set incsearch nohlsearch
+set ignorecase smartcase
 set spelllang=en_gb
-set title
-set nolist
 set listchars=eol:$,tab:\|\ >,trail:~,space:+
 syntax enable
 filetype plugin on
-set omnifunc=syntaxcomplete#Complete
+set omnifunc=syntaxcomplete#Complete completeopt=menu,menuone,noselect,noinsert
 
 "General remaps
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
@@ -112,24 +93,24 @@ nmap <leader>f :FZF<CR>
 nmap <leader>h  :noh<CR>
 
 "general appearance
-hi Normal guibg=NONE ctermbg=NONE
-hi SignColumn guibg=NONE
+function! BackgroundTransparency() abort
+	hi Normal guibg=NONE ctermbg=NONE
+	hi SignColumn guibg=NONE
+endfunction
+augroup MyColors
+	autocmd!
+	autocmd ColorScheme * call BackgroundTransparency()
+augroup END
+colo onedark
+let g:airline_theme='onedark'
 
 "Goyo and limelight hand in hand
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-" Color name (:help cterm-colors) or ANSI code
-let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
-
-" Color name (:help gui-colors) or RGB color
 let g:limelight_conceal_guifg = '#555555'
-
-" Default: 0.5
 let g:limelight_default_coefficient = 0.5
-
-" Number of preceding/following paragraphs to include (default: 0)
 let g:limelight_paragraph_span = 0
 
 "nord-vim customizations
@@ -153,11 +134,6 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-" powerline symbols
-" let g:airline_left_sep = ''
-" let g:airline_left_alt_sep = ''
-" let g:airline_right_sep = ''
-" let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.readonly = ''
@@ -173,10 +149,13 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['rkt'] = 'λ'
 
 "ALE settings
+let g:ale_enabled = 1
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 1
+let g:ale_virtualtext_cursor = 1
 let g:ale_set_ballons = 1
-let g:ale_hover_cursor = 1
+let g:ale_completion_enabled = 1
+let g:ale_linters = {'c': ['clang'], 'cpp': ['clang++']}
 
 "Make nerdtree be the preferred ':edit' for directories
 let g:NERDTreeHijackNetrw = 1
@@ -213,17 +192,8 @@ endfunction
 " Call everytime we open a Markdown file
 autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
 
-"deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#clang#libclang_path = "/usr/lib/libclang.so"
-let g:deoplete#sources#clang#clang_header = "/usr/lib/clang"
-autocmd CompleteDone * silent! pclose!
-
-"nvim lsp
-
 "upon entering the terminal
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen * setlocal nospell
 autocmd TermOpen * startinsert
-
