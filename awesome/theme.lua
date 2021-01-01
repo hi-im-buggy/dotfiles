@@ -37,7 +37,7 @@ theme.font          = "Noto Sans 10"
  theme.taglist_fg_empty     = theme.fg_minimize
 
  theme.useless_gap   = dpi(4)
- theme.border_width  = dpi(2)
+ theme.border_width  = dpi(1.75)
  theme.border_normal = "#2e3440"
  theme.border_focus  = "#e5e9f0"
  theme.border_marked = "#bf616a"
