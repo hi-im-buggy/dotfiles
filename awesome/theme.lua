@@ -14,9 +14,7 @@ local theme = {}
 
 theme.font          = "Noto Sans 10"
 
-----------------------------------
--- Dark translucent color theme --
-----------------------------------
+-- {{{ Dark translucent color theme
 
  theme.bg_normal     = "#0D131FA7"
  theme.bg_focus      = theme.fg_normal 
@@ -37,7 +35,7 @@ theme.font          = "Noto Sans 10"
  theme.taglist_fg_empty     = theme.fg_minimize
 
  theme.useless_gap   = dpi(4)
- theme.border_width  = dpi(1.75)
+ theme.border_width  = dpi(0.0)
  theme.border_normal = "#2e3440"
  theme.border_focus  = "#e5e9f0"
  theme.border_marked = "#bf616a"
@@ -45,9 +43,9 @@ theme.font          = "Noto Sans 10"
  theme.hotkeys_bg = "#2E3440EE"
  theme.hotkeys_modifiers_fg = "#D8DEE9DD" 
  
------------------
--- pywal theme --
------------------
+ -- }}}
+
+-- pywal theme {{{
 ----
 --theme.bg_normal     = xrdb.background
 --theme.bg_focus      = xrdb.color5
@@ -65,20 +63,9 @@ theme.font          = "Noto Sans 10"
 --theme.border_normal = xrdb.background
 --theme.border_focus  = xrdb.foreground
 --theme.border_marked = xrdb.color6
+-- }}}
 
----- There are other variable sets
----- overriding the default one when
----- defined, the sets are:
--- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
--- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
--- prompt_[fg|bg|fg_cursor|bg_cursor|font]
--- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
-
+-- Default stuff {{{
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
@@ -158,10 +145,11 @@ theme.awesome_icon = theme_assets.awesome_icon(
     theme.menu_height, theme.bg_focus, theme.fg_focus
 )
 
+--- }}}
+
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = Adwaita
+theme.icon_theme = "/usr/share/icons/Papirus-Dark/128x128"
 
 return theme
-
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80

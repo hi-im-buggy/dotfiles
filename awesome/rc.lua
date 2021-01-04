@@ -2,24 +2,6 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-require("awful.autofocus")
--- Widget and layout library
-local wibox = require("wibox")
--- Theme handling library
-local beautiful = require("beautiful")
--- Notification library
-local naughty = require("naughty")
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
--- Additional widgets from streetturtle/awesome-wm-widgets
-local volumearc_widget = require("awesome-wm-widgets.volumearc-widget.volumearc")
-local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
-local brightnessarc_widgetidget = require("awesome-wm-widgets.brightnessarc-widget.brightnessarc")
-local spotify_widget = require("awesome-wm-widgets.spotify-widget.spotify")
-
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -49,13 +31,33 @@ do
 end
 -- }}}
 
+-- Library calls {{{
+-- Standard awesome library
+local gears = require("gears")
+local awful = require("awful")
+require("awful.autofocus")
+-- Widget and layout library
+local wibox = require("wibox")
+-- Theme handling library
+local beautiful = require("beautiful")
+-- Notification library
+local naughty = require("naughty")
+local menubar = require("menubar")
+local hotkeys_popup = require("awful.hotkeys_popup")
+-- Additional widgets from streetturtle/awesome-wm-widgets
+local volumearc_widget = require("awesome-wm-widgets.volumearc-widget.volumearc")
+local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
+local brightnessarc_widgetidget = require("awesome-wm-widgets.brightnessarc-widget.brightnessarc")
+local spotify_widget = require("awesome-wm-widgets.spotify-widget.spotify")
+-- }}}
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("/home/buggy/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = "vim"
+editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -107,9 +109,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
-
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -175,8 +174,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    -- awful.tag({ " I ", " II ", " III ", " IV ", " V ", " VI ", " VII ", " VIII ", " IX " }, s, awful.layout.layouts[1])
-    awful.tag({ " I ", " II ", " III ", " IV ", " V "}, s, awful.layout.layouts[1])
+    awful.tag({ " I ", " II ", " III ", " IV ", " V ", " VI ", " VII ", " VIII ", " IX " }, s, awful.layout.layouts[1])
+    -- awful.tag({ " I ", " II ", " III ", " IV ", " V "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -203,7 +202,10 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+	custom_shape = function(cr, width, height)
+		gears.shape.rounded_rect(cr, width, height, 0)
+	end
+	s.mywibox = awful.wibar({ position = "top", screen = s, shape = custom_shape})
 
     -- Create the systray
     s.systray = wibox.widget.systray()
@@ -230,8 +232,8 @@ awful.screen.connect_for_each_screen(function(s)
 	    brightnessarc_widgetidget(),
 	    volumearc_widget({display_notification = true}),
 	    batteryarc_widget({ }),
-            mytextclock,
-            s.mylayoutbox,
+		mytextclock,
+		s.mylayoutbox,
         },
     }
 end)
@@ -239,9 +241,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, 3, function () mymainmenu:toggle() end)
 ))
 -- }}}
 
@@ -256,53 +256,34 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
-    awful.key({ modkey,           }, "j",
-        function ()
-            awful.client.focus.byidx( 1)
-        end,
-        {description = "focus next by index", group = "client"}
-    ),
-    awful.key({ modkey,           }, "k",
-        function ()
-            awful.client.focus.byidx(-1)
-        end,
-        {description = "focus previous by index", group = "client"}
-    ),
-    awful.key({ modkey,           }, "w", function () 
+	-- Focus by direction
+	awful.key({ modkey }, "j", function ()
+		awful.client.focus.bydirection("down")
+		if client.focus then client.focus:raise() end
+	end, {description = "focus client below current window", group = "client"}),
+	awful.key({ modkey }, "k", function ()
+		awful.client.focus.bydirection("up")
+		if client.focus then client.focus:raise() end
+	end, {description = "focus client above current window", group = "client"}),
+	awful.key({ modkey }, "l", function ()
+		awful.client.focus.bydirection("right")
+		if client.focus then client.focus:raise() end
+	end, {description = "focus client to the right of current window", group = "client"}),
+	awful.key({ modkey }, "h", function ()
+		awful.client.focus.bydirection("left")
+		if client.focus then client.focus:raise() end
+	end, {description = "focus client to the left of current window", group = "client"}),
+
+	awful.key({ modkey }, "w", function () 
 	awful.util.spawn("rofi -show window -fake-transparency")
-    end,
-              {description = "rofi window switcher", group = "rofi launcher"}),
+    end, {description = "rofi window switcher", group = "launcher"}),
 
-  -- Volume control
-  -- awful.key(
-  --   {},
-  --   'XF86AudioRaiseVolume', function()
-  --   awful.util.spawn("amixer -D pulse sset Master 5 %+")
--- end,
-  --   {description = 'volume up', group = 'hotkeys'}
-  -- ),
-  -- awful.key(
-  --   {},
-  --   'XF86AudioLowerVolume', function()
-  --   awful.util.spawn("amixer -D pulse sset Master 5 %-") 
--- end,
-  --   {description = 'volume down', group = 'hotkeys'}
-  -- ),
-  -- awful.key(
-  --   {},
-  --   'XF86AudioMute', function()
-  --   awful.util.spawn("amixer -D pulse sset Master toggle") 
--- end,
-  --   {description = 'toggle mute', group = 'hotkeys'}
-  -- ),
+  -- Lockscreen and systray
 
-  -- Lockscreen
-
-    awful.key({ modkey, "Control" }, "l", function ()
+    awful.key({ modkey, "Control" , "Shift"}, "l", function ()
 	awful.util.spawn("i3lock-fancy-rapid 3 10") end,
 	{description = "lock the screen", group = "laptop"}),
 
-	-- Systray toggle
     awful.key({ modkey }, "=", function ()
 	awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible end, 
 	{description = "Toggle systray visibility", group = "custom"}),
@@ -369,10 +350,6 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
-              {description = "increase master width factor", group = "layout"}),
-    awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
-              {description = "decrease master width factor", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
               {description = "increase the number of master clients", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
@@ -600,7 +577,7 @@ client.connect_signal("manage", function (c)
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
 	c.shape = function(cr,w,h)
-		gears.shape.rounded_rect(cr,w,h,5.5)
+		gears.shape.rounded_rect(cr,w,h,8)
 	end
 	if awesome.startup
       and not c.size_hints.user_position
@@ -662,8 +639,9 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- Autostart applications along with Awesome
+-- Autostarts {{{
 awful.spawn.with_shell("picom -b")
 awful.spawn.with_shell("nm-applet &")
 awful.spawn.with_shell("variety &")
 awful.spawn.with_shell("ibus-daemon -d")
+-- }}}

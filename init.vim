@@ -1,3 +1,4 @@
+" {{{ Plugins
 call plug#begin('~/.config/nvim/bundle')
 "Plugin manager
 	Plug 'junegunn/vim-plug'
@@ -45,24 +46,9 @@ call plug#begin('~/.config/nvim/bundle')
 "racket plugin
 	Plug 'wlangstroth/vim-racket'
 call plug#end()
+" }}}
 
-" load custom 'plugins'
-source ~/.config/nvim/redir.vim
-
-"true color terminals
-if exists('+termguicolors')
-	let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
-endif
-
-" UTF-8 support
-if exists('+multi_byte')
-	scriptencoding utf-8
-	set encoding=utf-8
-endif
-
-"general settings
+"{{{ General settings
 set nocp
 set title background=dark
 let mapleader=" "
@@ -92,7 +78,13 @@ nmap <leader>y :%!xclip -sel 'clipboard'<CR>u
 nmap <leader>f :FZF<CR>
 nmap <leader>h  :noh<CR>
 
-"general appearance
+"General appearance
+if exists('+termguicolors')
+	let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+endif
+
 function! BackgroundTransparency() abort
 	hi Normal guibg=NONE ctermbg=NONE
 	hi SignColumn guibg=NONE
@@ -103,7 +95,9 @@ augroup MyColors
 augroup END
 colo onedark
 let g:airline_theme='onedark'
+" }}}
 
+"{{{ Plugin settings
 "Goyo and limelight hand in hand
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
@@ -159,11 +153,9 @@ let g:ale_linters = {'c': ['clang'], 'cpp': ['clang++']}
 
 "Make nerdtree be the preferred ':edit' for directories
 let g:NERDTreeHijackNetrw = 1
+"}}}
 
-"LaTeX
-let g:tex_flavor = 'latex'
-
-"markdown
+"{{{ Markdown
 let g:markdown_fenced_languages =
 	\ ['make', 'bash', 'c', 'asm', 'lua', 'python', 'html', 'css']
 let g:vim_markdown_math = 1
@@ -191,9 +183,29 @@ endfunction
 
 " Call everytime we open a Markdown file
 autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
+"}}}
+
+""{{{ Misc
+" load custom 'plugins'
+source ~/.config/nvim/redir.vim
+
+" UTF-8 support
+if exists('+multi_byte')
+	scriptencoding utf-8
+	set encoding=utf-8
+endif
+
+"Use folding where possible
+if has ('folding')
+	set foldenable
+	set foldmethod=marker
+	set foldmarker={{{,}}}
+	set foldcolumn=0
+endif
 
 "upon entering the terminal
 autocmd TermOpen * setlocal nonumber
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen * setlocal nospell
 autocmd TermOpen * startinsert
+"}}}
