@@ -6,8 +6,6 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'vim-airline/vim-airline'
 "themes for the same
 	Plug 'vim-airline/vim-airline-themes'
-"tpope's defaults
-	Plug 'tpope/vim-sensible'
 "commenting toggle plugin
 	Plug 'tpope/vim-commentary'
 "another helpful tpope plugin
@@ -32,8 +30,6 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'joshdick/onedark.vim'
 "gruvbox colorscheme
 	Plug 'lifepillar/vim-gruvbox8'
-"Missing motion for vim
-	Plug 'justinmk/vim-sneak'
 "<C-v> <C-a> to increment a visual block
 	Plug 'triglav/vim-visual-increment'
 "Asynchronous linting engine
@@ -41,8 +37,6 @@ call plug#begin('~/.config/nvim/bundle')
 "Distraction-free writing in vim
 	Plug 'junegunn/goyo.vim'
 	Plug 'junegunn/limelight.vim'
-"rainbows for lisp madness!
-	Plug 'frazrepo/vim-rainbow'
 "racket plugin
 	Plug 'wlangstroth/vim-racket'
 call plug#end()
@@ -89,10 +83,17 @@ function! BackgroundTransparency() abort
 	hi Normal guibg=NONE ctermbg=NONE
 	hi SignColumn guibg=NONE
 endfunction
-augroup MyColors
+
+function! FontBellsAndWhistles() abort
+	hi Comment gui=italic
+endfunction
+
+augroup MakeItFancy
 	autocmd!
 	autocmd ColorScheme * call BackgroundTransparency()
+	autocmd ColorScheme * call FontBellsAndWhistles()
 augroup END
+
 colo onedark
 let g:airline_theme='onedark'
 " }}}
@@ -153,6 +154,7 @@ let g:ale_linters = {'c': ['clang'], 'cpp': ['clang++']}
 
 "Make nerdtree be the preferred ':edit' for directories
 let g:NERDTreeHijackNetrw = 1
+
 "}}}
 
 "{{{ Markdown
