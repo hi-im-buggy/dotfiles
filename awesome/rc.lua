@@ -44,11 +44,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
--- Additional widgets from streetturtle/awesome-wm-widgets
-local volumearc_widget = require("awesome-wm-widgets.volumearc-widget.volumearc")
-local batteryarc_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
-local brightnessarc_widgetidget = require("awesome-wm-widgets.brightnessarc-widget.brightnessarc")
-local spotify_widget = require("awesome-wm-widgets.spotify-widget.spotify")
+local lain = require("lain")
 -- }}}
 
 -- {{{ Variable definitions
@@ -110,9 +106,70 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- {{{ Wibar
+-- {{{ Wibar and Widgets
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+
+-- Create some widgets for use in the wibar
+--{{{ Network widget
+local network = lain.widget.net {
+	wifi_state = "on",
+	iface = {"lo", "wlo1"},
+	units = 1024 * 1024,	-- Set to megabytes
+	settings = function()
+		wifi = net_now.devices["wlo1"]
+		network_message = "Net: " .. wifi.received .. "mB/s " -- (.. "Up: " .. wifi.sent .. "mB/s") uncomment and remove parens to get up speed as well
+        widget:set_markup(lain.util.markup("#77c065", network_message))
+	end
+}
+--}}}
+
+-- {{{ Volume widget
+local volume = lain.widget.pulse {
+    settings = function()
+		if volume_now.left == volume_now.right then
+			vlevel = "Vol: " .. volume_now.left .. "%"
+		else
+			vlevel = "L: " .. volume_now.left .. "- R: " .. volume_now.right .. "%"
+		end
+        if volume_now.muted == "yes" then
+            vlevel = vlevel .. " M"
+        end
+        widget:set_markup(lain.util.markup("#7493d2", vlevel))
+    end
+}
+
+volume.widget:buttons(awful.util.table.join(
+    awful.button({}, 1, function() -- left click
+        awful.spawn("pavucontrol")
+    end),
+    awful.button({}, 2, function() -- middle click
+        os.execute(string.format("pactl set-sink-volume %s 100%%", volume.device))
+        volume.update()
+    end),
+    awful.button({}, 3, function() -- right click
+        os.execute(string.format("pactl set-sink-mute %s toggle", volume.device))
+        volume.update()
+    end),
+    awful.button({}, 4, function() -- scroll up
+        os.execute(string.format("pactl set-sink-volume %s +1%%", volume.device))
+        volume.update()
+    end),
+    awful.button({}, 5, function() -- scroll down
+        os.execute(string.format("pactl set-sink-volume %s -1%%", volume.device))
+        volume.update()
+    end)
+)) --}}}
+
+--{{{ Battery widget
+local battery = lain.widget.bat {
+	settings = function()
+		battery_message = "Bat: " .. bat_now.perc .. "%"
+        widget:set_markup(lain.util.markup("#dd5555", battery_message))
+	end
+}
+--}}}
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -221,17 +278,12 @@ awful.screen.connect_for_each_screen(function(s)
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
-		spotify_widget({
-			dim_when_paused = true,
-			dim_opacity = 0.5,
-			max_length = -1,	
-		}),
 	    spacing = 6,
 		layout = wibox.layout.fixed.horizontal,
 		s.systray,
-	    brightnessarc_widgetidget(),
-	    volumearc_widget({display_notification = true}),
-	    batteryarc_widget({ }),
+		network,
+		volume,
+		battery,
 		mytextclock,
 		s.mylayoutbox,
         },
