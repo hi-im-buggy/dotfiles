@@ -46,7 +46,7 @@ call plug#end()
 set nocp
 set title background=dark
 let mapleader=" "
-set number relativenumber
+set number
 set autoindent tabstop=4 softtabstop=4 shiftwidth=4
 set cursorline
 set wildmenu "visual command completion menu
@@ -56,6 +56,7 @@ set incsearch nohlsearch
 set ignorecase smartcase
 set spelllang=en_gb
 set listchars=eol:$,tab:\|\ >,trail:~,space:+
+set signcolumn=number
 syntax enable
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete completeopt=menu,menuone,noselect,noinsert
@@ -71,6 +72,8 @@ nmap <leader>z z=1<CR><CR>
 nmap <leader>y :%!xclip -sel 'clipboard'<CR>u
 nmap <leader>f :FZF<CR>
 nmap <leader>h  :noh<CR>
+nmap <leader>c :!ctags -R<CR><CR>
+nmap <leader>ws :%s/\s$//g<CR>
 
 "General appearance
 if exists('+termguicolors')
@@ -96,6 +99,7 @@ augroup END
 
 colo onedark
 let g:airline_theme='onedark'
+let g:onedark_terminal_italics=1
 " }}}
 
 "{{{ Plugin settings

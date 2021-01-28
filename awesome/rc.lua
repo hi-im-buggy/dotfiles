@@ -111,18 +111,18 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mytextclock = wibox.widget.textclock()
 
 -- Create some widgets for use in the wibar
---{{{ Network widget
-local network = lain.widget.net {
-	wifi_state = "on",
-	iface = {"lo", "wlo1"},
-	units = 1024 * 1024,	-- Set to megabytes
-	settings = function()
-		wifi = net_now.devices["wlo1"]
-		network_message = "Net: " .. wifi.received .. "mB/s " -- (.. "Up: " .. wifi.sent .. "mB/s") uncomment and remove parens to get up speed as well
-        widget:set_markup(lain.util.markup("#77c065", network_message))
-	end
-}
---}}}
+----{{{ Network widget
+--local network = lain.widget.net {
+--	wifi_state = "on",
+--	iface = {"lo", "wlo1"},
+--	units = 1024 * 1024,	-- Set to megabytes
+--	settings = function()
+--		wifi = net_now.devices["wlo1"]
+--		network_message = "Net: " .. wifi.received .. "mB/s " -- (.. "Up: " .. wifi.sent .. "mB/s") uncomment and remove parens to get up speed as well
+--        widget:set_markup(lain.util.markup("#77c065", network_message))
+--	end
+--}
+----}}}
 
 -- {{{ Volume widget
 local volume = lain.widget.pulse {
@@ -139,7 +139,7 @@ local volume = lain.widget.pulse {
     end
 }
 
-volume.widget:buttons(awful.util.table.join(
+ volume.widget:buttons(awful.util.table.join(
     awful.button({}, 1, function() -- left click
         awful.spawn("pavucontrol")
     end),
@@ -159,7 +159,7 @@ volume.widget:buttons(awful.util.table.join(
         os.execute(string.format("pactl set-sink-volume %s -1%%", volume.device))
         volume.update()
     end)
-)) --}}}
+))--}}}
 
 --{{{ Battery widget
 local battery = lain.widget.bat {
@@ -281,7 +281,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    spacing = 6,
 		layout = wibox.layout.fixed.horizontal,
 		s.systray,
-		network,
+		-- network,
 		volume,
 		battery,
 		mytextclock,
@@ -366,10 +366,10 @@ globalkeys = gears.table.join(
 	
     -- Volume
     awful.key({			}, "XF86AudioLowerVolume", function ()
-	awful.util.spawn("amixer -D pulse sset Master 5%-") end,
+	awful.util.spawn("pactl set-sink-volume %s -5%%") end,
 	{description = "decrease audio volume", group = "laptop"}),
     awful.key({			}, "XF86AudioRaiseVolume", function ()
-	awful.util.spawn("amixer -D pulse sset Master 5%+") end,
+	awful.util.spawn("pactl set-sink-volume %s +5%%") end,
 	{description = "increase audio volume", group = "laptop"}),
 
     -- Layout manipulation
