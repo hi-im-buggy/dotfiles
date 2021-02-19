@@ -12,6 +12,8 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'tpope/vim-surround'
 "git plugin by tpope again
 	Plug 'tpope/vim-fugitive'
+"better netrw by tpop
+	Plug 'tpope/vim-vinegar'
 "more tpope magic
 	Plug 'tpope/vim-unimpaired'
 "yet another tpope plugin
@@ -20,8 +22,6 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'chrisbra/Colorizer'
 "Latex plugin for vim
 	Plug 'lervag/vimtex'
-"Visual file tree plugin
-	Plug 'scrooloose/nerdTree'
 "dev-icons for vim
 	Plug 'ryanoasis/vim-devicons'
 "Nord colorscheme
@@ -30,8 +30,6 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'joshdick/onedark.vim'
 "gruvbox colorscheme
 	Plug 'lifepillar/vim-gruvbox8'
-"<C-v> <C-a> to increment a visual block
-	Plug 'triglav/vim-visual-increment'
 "Asynchronous linting engine
 	Plug 'dense-analysis/ale'
 "Distraction-free writing in vim
@@ -39,6 +37,8 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'junegunn/limelight.vim'
 "racket plugin
 	Plug 'wlangstroth/vim-racket'
+"Pretty lambdas!
+	Plug 'calebsmith/vim-lambdify'
 call plug#end()
 " }}}
 
@@ -62,12 +62,14 @@ filetype plugin on
 set omnifunc=syntaxcomplete#Complete completeopt=menu,menuone,noselect,noinsert
 
 "General remaps
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+inoremap <C-l> <C-o>:w<CR>
+nnoremap Y y$
 tmap <leader><leader> <C-\><C-n><C-w><C-w>
 tmap jj <C-\><C-n><Esc>
 tmap <M-Space> <C-\><C-n>
-nmap <leader>n :NERDTreeToggle<CR>
+"Leader maps
 nmap <leader>l :set list!<CR>
+nmap <leader>g :Gstatus<CR>
 nmap <leader>z z=1<CR><CR>
 nmap <leader>y :%!xclip -sel 'clipboard'<CR>u
 nmap <leader>f :FZF<CR>
@@ -100,6 +102,8 @@ augroup END
 colo onedark
 let g:airline_theme='onedark'
 let g:onedark_terminal_italics=1
+
+set conceallevel=2
 " }}}
 
 "{{{ Plugin settings
@@ -128,20 +132,19 @@ let g:airline_theme='onedark'
 let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#checks = [ 'trailing', 'conflicts' ]
-
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
-
 let g:airline_symbols.branch = ''
 let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty='⚡'
 
+"netrw/vinegar settings
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+
 "dev-icons for vim
-let g:webdevicons_enable_nerdtree = 1
-let g:webdevicons_conceal_nerdtree_brackets = 1
 let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_airline_tabline = 0
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
@@ -155,9 +158,6 @@ let g:ale_virtualtext_cursor = 1
 let g:ale_set_ballons = 1
 let g:ale_completion_enabled = 1
 let g:ale_linters = {'c': ['clang'], 'cpp': ['clang++']}
-
-"Make nerdtree be the preferred ':edit' for directories
-let g:NERDTreeHijackNetrw = 1
 
 "}}}
 
