@@ -2,34 +2,24 @@
 call plug#begin('~/.config/nvim/bundle')
 "Plugin manager
 	Plug 'junegunn/vim-plug'
+"tpope magic plugins
+	Plug 'tpope/vim-commentary'
+	Plug 'tpope/vim-surround'
+	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-vinegar'
+	Plug 'tpope/vim-unimpaired'
+	Plug 'tpope/vim-eunuch'
+"colorschemes
+	Plug 'arcticicestudio/nord-vim'
+	Plug 'joshdick/onedark.vim'
+	Plug 'lifepillar/vim-gruvbox8'
 "lean statusbar
 	Plug 'vim-airline/vim-airline'
-"themes for the same
 	Plug 'vim-airline/vim-airline-themes'
-"commenting toggle plugin
-	Plug 'tpope/vim-commentary'
-"another helpful tpope plugin
-	Plug 'tpope/vim-surround'
-"git plugin by tpope again
-	Plug 'tpope/vim-fugitive'
-"better netrw by tpop
-	Plug 'tpope/vim-vinegar'
-"more tpope magic
-	Plug 'tpope/vim-unimpaired'
-"yet another tpope plugin
-	Plug 'tpope/vim-eunuch'
 "colorize hex codes
 	Plug 'chrisbra/Colorizer'
-"Latex plugin for vim
-	Plug 'lervag/vimtex'
 "dev-icons for vim
 	Plug 'ryanoasis/vim-devicons'
-"Nord colorscheme
-	Plug 'arcticicestudio/nord-vim'
-"onedark colorscheme
-	Plug 'joshdick/onedark.vim'
-"gruvbox colorscheme
-	Plug 'lifepillar/vim-gruvbox8'
 "Asynchronous linting engine
 	Plug 'dense-analysis/ale'
 "Distraction-free writing in vim
@@ -46,7 +36,7 @@ call plug#end()
 set nocp
 set title background=dark
 let mapleader=" "
-set number
+set nonumber
 set autoindent tabstop=4 softtabstop=4 shiftwidth=4
 set cursorline
 set wildmenu "visual command completion menu
@@ -55,11 +45,11 @@ set clipboard=unnamedplus
 set incsearch nohlsearch
 set ignorecase smartcase
 set spelllang=en_gb
-set listchars=eol:$,tab:\|\ >,trail:~,space:+
+set list listchars=tab:\ \ ,trail:⋅
 set signcolumn=number
 syntax enable
 filetype plugin on
-set omnifunc=syntaxcomplete#Complete completeopt=menu,menuone,noselect,noinsert
+set omnifunc=ale#completion#OmniFunc completeopt=menu,menuone,noselect,noinsert
 
 "General remaps
 inoremap <C-l> <C-o>:w<CR>
@@ -67,13 +57,15 @@ nnoremap Y y$
 tmap <leader><leader> <C-\><C-n><C-w><C-w>
 tmap jj <C-\><C-n><Esc>
 tmap <M-Space> <C-\><C-n>
+cmap :W :w
+
 "Leader maps
 nmap <leader>l :set list!<CR>
 nmap <leader>g :Gstatus<CR>
 nmap <leader>z z=1<CR><CR>
 nmap <leader>y :%!xclip -sel 'clipboard'<CR>u
 nmap <leader>f :FZF<CR>
-nmap <leader>h  :noh<CR>
+nmap <leader>h :noh<CR>
 nmap <leader>c :!ctags -R<CR><CR>
 nmap <leader>ws :%s/\s$//g<CR>
 
@@ -91,6 +83,7 @@ endfunction
 
 function! FontBellsAndWhistles() abort
 	hi Comment gui=italic
+	hi link Whitespace Comment
 endfunction
 
 augroup MakeItFancy
@@ -155,9 +148,14 @@ let g:ale_enabled = 1
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 1
 let g:ale_virtualtext_cursor = 1
-let g:ale_set_ballons = 1
 let g:ale_completion_enabled = 1
-let g:ale_linters = {'c': ['clang'], 'cpp': ['clang++']}
+let g:ale_linters = {
+			\ 'c': ['clang'],
+			\ 'cpp': ['clang++'] }
+let g:ale_fixers = {
+			\ 'c': ['remove_trailing_lines', 'trim_whitespace'],
+			\ 'cpp': ['remove_trailing_lines', 'trim_whitespace'],
+			\ 'markdown': ['trim_whitespace'] }
 
 "}}}
 
@@ -169,22 +167,23 @@ let g:vim_markdown_math = 1
 "To get better syntax highlighting for embedded LaTeX math in markdown files
 "taken from https://stsievert.com/blog/2016/01/06/vim-jekyll-mathjax/
 function! MathAndLiquid()
-    "" Define certain regions
-    " Block math. Look for "$$[anything]$$"
-    syn region math start=/\$\$/ end=/\$\$/
-    " inline math. Look for "$[not $][anything]$"
-    syn match math_block '\$[^$].\{-}\$'
+	"" Define certain regions
+	" Block math. Look for "$$[anything]$$"
+	syn region math start=/\$\$/ end=/\$\$/
+	" inline math. Look for "$[not $][anything]$"
+	syn match math_block '\$[^$].\{-}\$'
 
-    " Liquid single line. Look for "{%[anything]%}"
-    syn match liquid '{%.*%}'
-    " Liquid multiline. Look for "{%[anything]%}[anything]{%[anything]%}"
-    syn region highlight_block start='{% highlight .*%}' end='{%.*%}'
+	" Liquid single line. Look for "{%[anything]%}"
+	syn match liquid '{%.*%}'
+	" Liquid multiline. Look for "{%[anything]%}[anything]{%[anything]%}"
+	syn region highlight_block start='{% highlight .*%}' end='{%.*%}'
 
-    "" Actually highlight those regions.
-    hi link math String
-    hi link liquid Statement
-    hi link highlight_block Function
-    hi link math_block Macro
+	"" Actually highlight those regions.
+	hi link math String
+	hi link liquid Statement
+	hi link highlight_block Function
+	hi link math_block Macro
+	set conceallevel=2
 endfunction
 
 " Call everytime we open a Markdown file
