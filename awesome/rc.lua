@@ -231,8 +231,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "web", "code", "im", "music", "terms", "extra"}, s, awful.layout.layouts[1])
-    -- awful.tag({ " I ", " II ", " III ", " IV ", " V "}, s, awful.layout.layouts[1])
+    -- awful.tag({ "web", "code", "im", "music", "terms", "extra"}, s, awful.layout.layouts[1])
+    awful.tag({ " I ", " II ", " III ", " IV ", " V "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -298,6 +298,7 @@ root.buttons(gears.table.join(
 -- }}}
 
 -- {{{ Key bindings
+
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -487,12 +488,23 @@ clientkeys = gears.table.join(
             c.maximized_horizontal = not c.maximized_horizontal
             c:raise()
         end ,
-        {description = "(un)maximize horizontally", group = "client"})
+        {description = "(un)maximize horizontally", group = "client"}),
+
+	-- Miscellaneous
+	awful.key({ modkey, "Control"}, "u", function ()
+	awful.util.spawn_with_shell("scripts/unicode.py | rofi -dmenu -i -p unicode | cut -d$'\t' -f2 | xclip -r -selection clipboard; xdotool key ctrl+v")
+    end, {description = "unicode selector", group = "miscellaneous"}),
+
+	awful.key({ modkey, "Control"}, "s", function ()
+	awful.util.spawn_with_shell("teiler")
+	end, {description = "teiler", group = "miscellaneous"}),
+
+	awful.key({ modkey, "Control"}, "e", function ()
+	awful.util.spawn_with_shell("splatmoji copypaste")
+    end, {description = "emoji selector", group = "miscellaneous"})
+
 )
 
--- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it work on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 9 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
@@ -694,6 +706,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostarts {{{
 awful.spawn.with_shell("picom -b")
 awful.spawn.with_shell("nm-applet &")
-awful.spawn.with_shell("variety &")
+-- awful.spawn.with_shell("variety &")
 awful.spawn.with_shell("ibus-daemon -d")
 -- }}}

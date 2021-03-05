@@ -1,16 +1,16 @@
 configuration {
-	modi: "window,run,ssh,keys";
+	modi: "window,run,drun,ssh";
 	width: 50;
-	lines: 15;
+	lines: 20;
 	columns: 1;
-	font: "Source Code Pro 12";
+	font: "mono 10";
 	bw: 1;
 	location: 0;
 	padding: 5;
 	yoffset: 0;
 	xoffset: 0;
 	fixed-num-lines: true;
-	show-icons: false;
+	show-icons: true;
 	terminal: "rofi-sensible-terminal";
 	ssh-client: "ssh";
 	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
@@ -29,12 +29,12 @@ configuration {
 	/* sorting-method: ; */
 	case-sensitive: false;
 	cycle: true;
-	sidebar-mode: false;
+	sidebar-mode: true;
 	eh: 1;
 	auto-select: false;
 	parse-hosts: false;
 	parse-known-hosts: true;
-	combi-modi: "window,run";
+	combi-modi: "window,run,drun";
 	matching: "normal";
 	tokenize: true;
 	m: "-5";
