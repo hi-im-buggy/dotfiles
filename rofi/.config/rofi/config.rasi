@@ -19,6 +19,7 @@ configuration {
 	run-shell-command: "{terminal} -e {cmd}";
 	window-command: "wmctrl -i -R {window}";
 	window-match-fields: "all";
+	window-thumbnail: true;
 	/* icon-theme: ; */
 	drun-match-fields: "name,generic,exec,categories";
 	drun-show-actions: false;
@@ -144,3 +145,4 @@ configuration {
 	me-accept-entry: "MouseDPrimary";
 	me-accept-custom: "Control+MouseDPrimary";
 }
+@import "/home/buggy/.local/share/rofi/themes/slate.rasi"
