@@ -25,9 +25,9 @@ window:
   #
   # Specified in number of pixels.
   # If the position is not set, the window manager will handle the placement.
-  position:
-   x: 474
-   y: 230
+  # position:
+  #  x: 474
+  #  y: 230
 
   # Window padding (changes require restart)
   #
@@ -766,7 +766,6 @@ colors:
 font:
   normal:
     family: Source Code Pro
-    style: Regular
 
   bold:
     family: Source Code Pro

@@ -6,53 +6,32 @@ pcall(require, "luarocks.loader")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
-end
+-- Error handling
+require("main.error-handling")
 
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
-
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
-        in_error = false
-    end)
-end
--- }}}
-
--- Library calls {{{
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local lain = require("lain")
--- }}}
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("/home/buggy/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "alacritty"
+terminal = "kitty"
 editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -268,6 +247,10 @@ awful.screen.connect_for_each_screen(function(s)
     s.systray = wibox.widget.systray()
     s.systray.visible = false
 
+	-- Create the calendar
+	local month_calendar = awful.widget.calendar_popup.month()
+	month_calendar:attach( mytextclock, 'tr' )
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -327,7 +310,7 @@ globalkeys = gears.table.join(
 		if client.focus then client.focus:raise() end
 	end, {description = "focus client to the left of current window", group = "client"}),
 
-	awful.key({ modkey }, "w", function () 
+	awful.key({ modkey }, "w", function ()
 	awful.util.spawn("rofi -show window -fake-transparency")
     end, {description = "rofi window switcher", group = "launcher"}),
 
@@ -429,8 +412,9 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show run -fake-transparency") end,
-              {description = "rofi", group = "rofi launcher"}),
+    awful.key({ modkey },            "r",     function () 
+		awful.util.spawn("rofi -show drun -fake-transparency")
+	end, {description = "rofi", group = "rofi launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -491,17 +475,21 @@ clientkeys = gears.table.join(
         {description = "(un)maximize horizontally", group = "client"}),
 
 	-- Miscellaneous
-	awful.key({ modkey, "Control"}, "u", function ()
+	awful.key({ modkey, "Shift"}, "u", function ()
 	awful.util.spawn_with_shell("scripts/unicode.py | rofi -dmenu -i -p unicode | cut -d$'\t' -f2 | xclip -r -selection clipboard; xdotool key ctrl+v")
     end, {description = "unicode selector", group = "miscellaneous"}),
 
-	awful.key({ modkey, "Control"}, "s", function ()
-	awful.util.spawn_with_shell("teiler")
+	awful.key({ modkey, "Shift"}, "s", function ()
+	awful.util.spawn_with_shell("maim -s | tee ~/Pictures/Screenshots/$(date +%s).png | xclip -selection clipboard -t image/png")
 	end, {description = "teiler", group = "miscellaneous"}),
 
-	awful.key({ modkey, "Control"}, "e", function ()
+	awful.key({ modkey, "Shift"}, "e", function ()
 	awful.util.spawn_with_shell("splatmoji copypaste")
-    end, {description = "emoji selector", group = "miscellaneous"})
+    end, {description = "emoji selector", group = "miscellaneous"}),
+
+	awful.key({ modkey, "Shift"}, "n", function ()
+	awful.util.spawn_with_shell("scripts/content-ls.sh Notes/** | rofi -dmenu -i -p notes | scripts/launch-nvim.sh")
+	end, {description = "nv style finder", group = "miscellaneous"})
 
 )
 
@@ -691,7 +679,7 @@ client.connect_signal("request::titlebars", function(c)
 --         layout = wibox.layout.align.horizontal
 --     }
 --
---     Apparently this end statement is important to the doc structure, don't delete it 
+--     Apparently this end statement is important to the doc structure, don't delete it
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
@@ -706,6 +694,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostarts {{{
 awful.spawn.with_shell("picom -b")
 awful.spawn.with_shell("nm-applet &")
--- awful.spawn.with_shell("variety &")
+awful.spawn.with_shell("variety &")
 awful.spawn.with_shell("ibus-daemon -d")
 -- }}}

@@ -16,7 +16,7 @@ theme.font          = "Noto Sans 10"
 
 -- {{{ Dark translucent color theme
 
- theme.bg_normal     = "#0D131FA7"
+ theme.bg_normal     = "#0D131FFF"
  theme.bg_focus      = theme.fg_normal 
  theme.bg_urgent     = "#E5E9F077"
  theme.bg_minimize   = "#0D131F00"
@@ -35,14 +35,14 @@ theme.font          = "Noto Sans 10"
  theme.taglist_fg_empty     = theme.fg_minimize
 
  theme.useless_gap   = dpi(4)
- theme.border_width  = dpi(0.0)
+ theme.border_width  = dpi(0)
  theme.border_normal = "#2e3440"
  theme.border_focus  = "#e5e9f0"
  theme.border_marked = "#bf616a"
 
  theme.hotkeys_bg = "#2E3440EE"
  theme.hotkeys_modifiers_fg = "#D8DEE9DD" 
- 
+
  -- }}}
 
 -- pywal theme {{{
@@ -149,7 +149,7 @@ theme.awesome_icon = theme_assets.awesome_icon(
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = "/usr/share/icons/Papirus-Dark/128x128"
+theme.icon_theme = "/usr/share/icons/Arc"
 
 return theme
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
