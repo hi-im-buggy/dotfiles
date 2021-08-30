@@ -156,8 +156,8 @@ let g:highlightedyank_highlight_duration = 500
 
 "UltiSnips settings
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 
 "nv-fzf
 let g:nv_search_paths = ['~/Notes', './notes/']
