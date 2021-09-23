@@ -1,6 +1,6 @@
 "{{{ Plugins
 call plug#begin('~/.config/nvim/bundle')
-"Plugin manager
+"plugin manager
 	Plug 'junegunn/vim-plug'
 "tpope magic plugins
 	Plug 'tpope/vim-commentary'
@@ -9,37 +9,39 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'tpope/vim-repeat'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-unimpaired'
-	Plug 'tpope/vim-vinegar'
 "colorschemes
 	Plug 'YorickPeterse/vim-paper'
 	Plug 'arcticicestudio/nord-vim'
 	Plug 'joshdick/onedark.vim'
 	Plug 'romgrk/doom-one.vim'
+	Plug 'wadackel/vim-dogrun'
 "languge-specific
-	Plug 'drmingdrmer/vim-syntax-markdown'
 	Plug 'lervag/vimtex'
 	Plug 'wlangstroth/vim-racket'
+"make pandoc work better
+	Plug 'vim-pandoc/vim-pandoc-syntax'
+	Plug 'vim-pandoc/vim-pandoc'
 "colorize hex codes
 	Plug 'chrisbra/Colorizer'
-"Rainbow parens
-	Plug 'kien/rainbow_parentheses.vim'
-"Handle file:line style filenames
+"handle file:line style filenames
 	Plug 'bogado/file-line'
-"Highlight yanks
+"highlight yanks
 	Plug 'machakann/vim-highlightedyank'
-"Smooth scrolling
+"smooth scrolling
 	Plug 'psliwka/vim-smoothie'
-"Undo tree
+"undo tree
 	Plug 'simnalamburt/vim-mundo'
-"Neovim tree-sitter
+"neovim tree-sitter
 	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-"Note taking
+"fuzzy finding
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	Plug 'https://github.com/alok/notational-fzf-vim'
-"Snippets
+	Plug 'junegunn/fzf.vim',
+"note taking
+	Plug 'alok/notational-fzf-vim'
+"preview for registers
+	Plug 'junegunn/vim-peekaboo'
+"snippets
 	Plug 'sirver/ultisnips'
-"tiny pretty statusline
-	Plug 'rafi/vim-tinyline'
 "neovim language server protocol
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'kabouzeid/nvim-lspinstall'
@@ -53,6 +55,12 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'Olical/aniseed', {'tag': 'v3.20.0'}
 "conversational software development for lisp
 	Plug 'Olical/conjure', {'tag': 'v4.22.1'}
+"general lua dependency
+	Plug 'nvim-lua/plenary.nvim'
+"gitsigns
+	Plug 'lewis6991/gitsigns.nvim'
+"dirvish
+	Plug 'justinmk/vim-dirvish'
 call plug#end()
 "}}}
 
@@ -60,7 +68,7 @@ call plug#end()
 set nocp
 set title background=dark
 let mapleader=" "
-let maplocalleader=" "
+let maplocalleader="\\"
 set number
 set autoindent tabstop=4 softtabstop=4 shiftwidth=4
 set cursorline
@@ -79,6 +87,13 @@ set grepprg=rg\ --vimgrep\ --no-heading
 set mouse+=a
 set iskeyword+='-'
 set path=.,./**
+set signcolumn=yes
+
+"Statusine
+set statusline =%<%f\ 
+set statusline +=%h%m%r
+set statusline +=%{FugitiveStatusline()}
+set statusline +=%=%-14.(%l,%c%V%)\ %P
 
 "General remaps
 nmap Y y$
@@ -92,16 +107,18 @@ tnoremap jj <C-\><C-n><Esc>
 tnoremap <M-Space> <C-\><C-n>
 
 "Leader maps
-tnoremap <leader><leader> <C-\><C-n><C-w><C-w>
-nnoremap <leader>g :Git<CR>
-nnoremap <leader>z z=1<CR><CR>
-nnoremap <leader>m :!make<CR>
-nnoremap <leader>u :MundoToggle<CR>
-nnoremap <leader>t :tabnew<CR>
-nnoremap <leader>w <C-w>
 nnoremap <leader>; <C-^>
-nnoremap <leader>n :NV<CR>
 nnoremap <leader>a :argadd %<CR>
+nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :Git<CR>
+nnoremap <leader>m :!make<CR>
+nnoremap <leader>n :NV<CR>
+nnoremap <leader>t :tabnew<CR>
+nnoremap <leader>u :MundoToggle<CR>
+nnoremap <leader>w <C-w>
+nnoremap <leader>z z=1<CR><CR>
+tnoremap <leader><leader> <C-\><C-n><C-w><C-w>
 
 "is this even a remap?
 command! W write
@@ -123,7 +140,7 @@ function! FontBellsAndWhistles() abort
 	hi link Whitespace Comment
 endfunction
 
-let g:enable_fancy_visuals=0
+let g:enable_fancy_visuals = 0
 if (g:enable_fancy_visuals)
 	augroup MakeItFancy
 		autocmd!
@@ -161,6 +178,9 @@ let g:UltiSnipsJumpBackwardTrigger="<S-tab>"
 
 "nv-fzf
 let g:nv_search_paths = ['~/Notes', './notes/']
+
+"vim-dirvish
+let g:dirvish_mode = ':silent keeppatterns g@\v/\.[^\/]+/?$@d _'
 
 "Lua plugins
 lua << EOF
@@ -241,6 +261,10 @@ require'compe'.setup {
     ultisnips = true;
   };
 }
+
+-- git signs
+require('gitsigns').setup()
+
 EOF
 
 " Non-lua mappings for nvim-compe
@@ -263,6 +287,44 @@ let g:markdown_fenced_languages =
 	\ 'html', 'css', 'cpp', 'gnuassembler=asm',
 	\ 'lisp']
 let g:vim_markdown_math = 1
+
+"vim pandoc
+let g:pandoc#filetypes#pandoc_markdown = 1
+let g:pandoc#modules#disabled = ["folding"]
+let g:pandoc#folding#fdc  = 0
+
+let g:pandoc#command#autoexec_on_writes = 0
+let g:pandoc#command#autoexec_command = "Pandoc pdf"
+let g:pandoc#command#use_message_buffers = 0
+
+let g:pandoc#command#custom_open = "MyPandocOpen"
+function! MyPandocOpen(file)
+	let file = shellescape(fnamemodify(a:file, ':p'))
+	let file_extension = fnamemodify(a:file, ':e')
+	if file_extension is? 'pdf'
+		if !empty($PDFVIEWER)
+			return expand('$PDFVIEWER') . ' ' . file
+		elseif executable('zathura')
+			return 'zathura ' . file
+		elseif executable('mupdf')
+			return 'mupdf ' . file
+		endif
+	elseif file_extension is? 'html'
+		if !empty($BROWSER)
+			return expand('$BROWSER') . ' ' . file
+		elseif executable('firefox')
+			return 'firefox ' . file
+		elseif executable('chromium')
+			return 'chromium ' . file
+		endif
+	elseif file_extension is? 'odt' && executable('okular')
+		return 'okular ' . file
+	elseif file_extension is? 'epub' && executable('okular')
+		return 'okular ' . file
+	else
+		return 'xdg-open ' . file
+	endif
+endfunction
 "}}}
 
 "{{{ Latex
