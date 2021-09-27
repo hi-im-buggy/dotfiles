@@ -2,12 +2,19 @@
 # ~/.bashrc #
 #############
 
-source ~/.bash_defaults
-source ~/.env
-source ~/.bash_aliases
-source ~/.customfunctions
+files=(
+	"~/.bash_defaults"
+	"~/.env"
+	"~/.bash_aliases"
+	"~/.customfunctions"
+	# fzf - the fuzzy finder
+	"/usr/share/fzf/key-bindings.bash"
+	"/usr/share/fzf/completion.bash"
+	"~/.fzf.bash"
+)
 
-#fzf - the fuzzy finder
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+for file in ${files[@]}; do
+	if test -f "$file"; then
+		source "$file"
+	fi
+done
