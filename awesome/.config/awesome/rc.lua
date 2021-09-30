@@ -321,7 +321,7 @@ globalkeys = gears.table.join(
 	{description = "lock the screen", group = "laptop"}),
 
     awful.key({ modkey }, "=", function ()
-	awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible end, 
+	awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible end,
 	{description = "Toggle systray visibility", group = "custom"}),
 
   -- Brightness
@@ -332,7 +332,7 @@ globalkeys = gears.table.join(
     awful.key({	modkey,		 }, "]", function ()
         awful.util.spawn("light -A 5") end,
 	{description = "increase screen brightness", group = "laptop"}),
-	
+
     awful.key({			 }, "XF86MonBrightnessDown", function ()
         awful.util.spawn("light -U 5") end,
 	{description = "decrease screen brightness", group = "laptop"}),
@@ -412,7 +412,7 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () 
+    awful.key({ modkey },            "r",     function ()
 		awful.util.spawn("rofi -show drun -fake-transparency")
 	end, {description = "rofi", group = "rofi launcher"}),
 

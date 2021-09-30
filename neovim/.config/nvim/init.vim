@@ -61,6 +61,8 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'lewis6991/gitsigns.nvim'
 "dirvish
 	Plug 'justinmk/vim-dirvish'
+"vim move
+	Plug 'matze/vim-move'
 call plug#end()
 "}}}
 
@@ -68,7 +70,7 @@ call plug#end()
 set nocp
 set title background=dark
 let mapleader=" "
-let maplocalleader="\\"
+let maplocalleader=","
 set number
 set autoindent tabstop=4 softtabstop=4 shiftwidth=4
 set cursorline
@@ -88,6 +90,7 @@ set mouse+=a
 set iskeyword+='-'
 set path=.,./**
 set signcolumn=yes
+set showcmd
 
 "Statusine
 set statusline =%<%f\ 
@@ -106,6 +109,7 @@ nnoremap <S-Tab> gT
 tnoremap jj <C-\><C-n><Esc>
 tnoremap <M-Space> <C-\><C-n>
 
+
 "Leader maps
 nnoremap <leader>; <C-^>
 nnoremap <leader>a :argadd %<CR>
@@ -114,6 +118,7 @@ nnoremap <leader>f :Files<CR>
 nnoremap <leader>g :Git<CR>
 nnoremap <leader>m :!make<CR>
 nnoremap <leader>n :NV<CR>
+nnoremap <leader>p :Pandoc pdf<CR>
 nnoremap <leader>t :tabnew<CR>
 nnoremap <leader>u :MundoToggle<CR>
 nnoremap <leader>w <C-w>
@@ -181,6 +186,9 @@ let g:nv_search_paths = ['~/Notes', './notes/']
 
 "vim-dirvish
 let g:dirvish_mode = ':silent keeppatterns g@\v/\.[^\/]+/?$@d _'
+
+"vim-peekaboo
+let g:peekaboo_window='topleft new'
 
 "Lua plugins
 lua << EOF
