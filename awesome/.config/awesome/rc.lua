@@ -149,6 +149,8 @@ local battery = lain.widget.bat {
 }
 --}}}
 
+-- Music player widget
+local now_playing = awful.widget.watch("playerctl metadata --format 'Now Playing: {{title}} - {{artist}}'",5)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -211,7 +213,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     -- awful.tag({ "web", "code", "im", "music", "terms", "extra"}, s, awful.layout.layouts[1])
-    awful.tag({ " I ", " II ", " III ", " IV ", " V "}, s, awful.layout.layouts[1])
+    awful.tag({ " I ", " II ", " III ", " IV ", " V ", " VI ", " VII ", " VIII ", " IX ", " X "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -226,7 +228,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
-        filter  = awful.widget.taglist.filter.all,
+        filter  = awful.widget.taglist.filter.noempty,
         buttons = taglist_buttons
     }
 
@@ -264,6 +266,7 @@ awful.screen.connect_for_each_screen(function(s)
 	    spacing = 6,
 		layout = wibox.layout.fixed.horizontal,
 		s.systray,
+		now_playing,
 		-- network,
 		volume,
 		battery,
@@ -493,7 +496,7 @@ clientkeys = gears.table.join(
 
 )
 
-for i = 1, 9 do
+for i = 1, 10 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -694,6 +697,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Autostarts {{{
 awful.spawn.with_shell("picom -b")
 awful.spawn.with_shell("nm-applet &")
-awful.spawn.with_shell("variety &")
+-- awful.spawn.with_shell("variety &")
 awful.spawn.with_shell("ibus-daemon -d")
 -- }}}
