@@ -9,5 +9,3 @@ set mouse=a
 set termguicolors
 set background=dark
 set fileencodings=utf-8
-colo one
-nmap <C-S> :w<CR>

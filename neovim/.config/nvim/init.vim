@@ -3,7 +3,6 @@ call plug#begin('~/.config/nvim/bundle')
 "plugin manager
 	Plug 'junegunn/vim-plug'
 "tpope magic plugins
-	Plug 'tpope/vim-commentary'
 	Plug 'tpope/vim-eunuch'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-repeat'
@@ -13,7 +12,7 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'YorickPeterse/vim-paper'
 	Plug 'arcticicestudio/nord-vim'
 	Plug 'joshdick/onedark.vim'
-	Plug 'romgrk/doom-one.vim'
+	Plug 'NTBBloodbath/doom-one.nvim'
 	Plug 'wadackel/vim-dogrun'
 "languge-specific
 	Plug 'lervag/vimtex'
@@ -38,31 +37,27 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'junegunn/fzf.vim',
 "note taking
 	Plug 'alok/notational-fzf-vim'
-"preview for registers
-	Plug 'junegunn/vim-peekaboo'
 "snippets
 	Plug 'sirver/ultisnips'
 "neovim language server protocol
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'kabouzeid/nvim-lspinstall'
-"auto completion
-	Plug 'hrsh7th/nvim-compe'
 "competitive programming io
 	Plug 'ex-surreal/vim-std-io'
-"vimspector gadget
-	Plug 'puremourning/vimspector'
 "lispy goodness, fennel helpers
-	Plug 'Olical/aniseed', {'tag': 'v3.20.0'}
+	Plug 'Olical/aniseed'
 "conversational software development for lisp
-	Plug 'Olical/conjure', {'tag': 'v4.22.1'}
+	Plug 'Olical/conjure'
 "general lua dependency
 	Plug 'nvim-lua/plenary.nvim'
 "gitsigns
 	Plug 'lewis6991/gitsigns.nvim'
 "dirvish
 	Plug 'justinmk/vim-dirvish'
-"vim move
-	Plug 'matze/vim-move'
+"new commenting plugin, ala vim-commentary
+	Plug 'numToStr/Comment.nvim'
+"sudowrite plugin
+	Plug 'lambdalisue/suda.vim'
 call plug#end()
 "}}}
 
@@ -70,7 +65,7 @@ call plug#end()
 set nocp
 set title background=dark
 let mapleader=" "
-let maplocalleader=","
+let maplocalleader="\\"
 set number
 set autoindent tabstop=4 softtabstop=4 shiftwidth=4
 set cursorline
@@ -102,17 +97,16 @@ set statusline +=%=%-14.(%l,%c%V%)\ %P
 nmap Y y$
 nnoremap <C-n> +
 nnoremap <C-p> -
-nnoremap <C-j> :next<CR>
-nnoremap <C-k> :previous<CR>
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
+inoremap <C-\> <Esc>Bi\<Esc>A
 tnoremap jj <C-\><C-n><Esc>
 tnoremap <M-Space> <C-\><C-n>
 
-
 "Leader maps
 nnoremap <leader>; <C-^>
-nnoremap <leader>a :argadd %<CR>
+nnoremap <leader>: :Commands<CR>
+nnoremap <leader>/ :Lines<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>g :Git<CR>
@@ -187,13 +181,10 @@ let g:nv_search_paths = ['~/Notes', './notes/']
 "vim-dirvish
 let g:dirvish_mode = ':silent keeppatterns g@\v/\.[^\/]+/?$@d _'
 
-"vim-peekaboo
-let g:peekaboo_window='topleft new'
-
 "Lua plugins
 lua << EOF
 -- Treesitter config settings
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
 	ensure_installed = "maintained",
 	highlight = {
 		enable = true,
@@ -231,62 +222,43 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  buf_set_keymap('n', '<space>Gq', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>Gf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
 end
 
 -- setup lspinstall
-require'lspinstall'.setup()
+require('lspinstall').setup()
 
 local servers = require'lspinstall'.installed_servers()
+table.insert(servers, 'racket_langserver')
+
 for _, server in pairs(servers) do
   require'lspconfig'[server].setup{ on_attach = on_attach }
 end
 
--- nvim-compe setup for auto completion
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = false;
-    ultisnips = true;
-  };
-}
-
 -- git signs
 require('gitsigns').setup()
 
-EOF
+-- Comment.nvim
+require('Comment').setup()
 
-" Non-lua mappings for nvim-compe
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+local ft = require('Comment.ft')
+
+ft.set('pandoc', {
+	'<!-- %s -->',
+	'<!-- %s -->'
+	})
+
+EOF
+" end lua
 
 " vim-std-io
 let g:std_io_map_default = 0
 
-"vimspector
-let g:vimspector_enable_mappings = 'HUMAN'
+"termdebug
+let g:termdebug_wide = 1
+
 "}}}
 
 "{{{ Markdown
