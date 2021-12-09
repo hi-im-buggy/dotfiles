@@ -2,10 +2,6 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
-
 -- Error handling
 require("main.error-handling")
 
@@ -23,52 +19,34 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+
+-- Global table for main configuration
+local rc = {}
+
+-- Enable hotkeys help widget for VIM and other apps
+-- when client with a matching name is opened:
 local hotkeys_popup = require("awful.hotkeys_popup")
-local lain = require("lain")
 
 -- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
-beautiful.init("/home/buggy/.config/awesome/theme.lua")
+rc.vars = require("main.user-vars")
 
--- This is used later as the default terminal and editor to run.
-terminal = "kitty"
-editor = "nvim"
-editor_cmd = terminal .. " -e " .. editor
+terminal = rc.vars.terminal
+editor = rc.vars.editor
+visual = rc.vars.visual
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
-
--- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
-    awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    -- awful.layout.suit.tile.left,
-    -- awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    -- awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
-    -- awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
-}
+modkey = rc.vars.modkey
 -- }}}
+
+local main = {
+    layout = require("main.layout")
+}
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "edit config", visual .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end },
 }
@@ -90,67 +68,12 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 mytextclock = wibox.widget.textclock()
 
 -- Create some widgets for use in the wibar
-----{{{ Network widget
---local network = lain.widget.net {
---	wifi_state = "on",
---	iface = {"lo", "wlo1"},
---	units = 1024 * 1024,	-- Set to megabytes
---	settings = function()
---		wifi = net_now.devices["wlo1"]
---		network_message = "Net: " .. wifi.received .. "mB/s " -- (.. "Up: " .. wifi.sent .. "mB/s") uncomment and remove parens to get up speed as well
---        widget:set_markup(lain.util.markup("#77c065", network_message))
---	end
---}
-----}}}
 
 -- {{{ Volume widget
-local volume = lain.widget.pulse {
-    settings = function()
-		if volume_now.left == volume_now.right then
-			vlevel = "Vol: " .. volume_now.left .. "%"
-		else
-			vlevel = "L: " .. volume_now.left .. "- R: " .. volume_now.right .. "%"
-		end
-        if volume_now.muted == "yes" then
-            vlevel = vlevel .. " M"
-        end
-        widget:set_markup(lain.util.markup("#7493d2", vlevel))
-    end
-}
-
- volume.widget:buttons(awful.util.table.join(
-    awful.button({}, 1, function() -- left click
-        awful.spawn("pavucontrol")
-    end),
-    awful.button({}, 2, function() -- middle click
-        os.execute(string.format("pactl set-sink-volume %s 100%%", volume.device))
-        volume.update()
-    end),
-    awful.button({}, 3, function() -- right click
-        os.execute(string.format("pactl set-sink-mute %s toggle", volume.device))
-        volume.update()
-    end),
-    awful.button({}, 4, function() -- scroll up
-        os.execute(string.format("pactl set-sink-volume %s +1%%", volume.device))
-        volume.update()
-    end),
-    awful.button({}, 5, function() -- scroll down
-        os.execute(string.format("pactl set-sink-volume %s -1%%", volume.device))
-        volume.update()
-    end)
-))--}}}
-
---{{{ Battery widget
-local battery = lain.widget.bat {
-	settings = function()
-		battery_message = "Bat: " .. bat_now.perc .. "%"
-        widget:set_markup(lain.util.markup("#dd5555", battery_message))
-	end
-}
 --}}}
-
+--
 -- Music player widget
-local now_playing = awful.widget.watch("playerctl metadata --format 'Now Playing: {{title}} - {{artist}}'",5)
+local now_playing = awful.widget.watch("playerctl metadata --format 'Now Playing: {{title}} - {{artist}}'", 1)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -213,7 +136,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     -- awful.tag({ "web", "code", "im", "music", "terms", "extra"}, s, awful.layout.layouts[1])
-    awful.tag({ " I ", " II ", " III ", " IV ", " V ", " VI ", " VII ", " VIII ", " IX ", " X "}, s, awful.layout.layouts[1])
+    awful.tag({ " I ", " II ", " III ", " IV ", " V ", " VI ", " VII ", " VIII ", " IX ", " X "}, s, main.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -221,10 +144,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+                           awful.button({ }, 1, function () main.layout.inc( 1) end),
+                           awful.button({ }, 3, function () main.layout.inc(-1) end),
+                           awful.button({ }, 4, function () main.layout.inc( 1) end),
+                           awful.button({ }, 5, function () main.layout.inc(-1) end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -296,8 +219,8 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
 	    spacing = 6,
 		layout = wibox.layout.fixed.horizontal,
-		s.systray,
 		now_playing,
+		s.systray,
 		-- network,
 		volume,
 		battery,
@@ -428,9 +351,9 @@ globalkeys = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+    awful.key({ modkey,           }, "space", function () main.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
+    awful.key({ modkey, "Shift"   }, "space", function () main.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
@@ -628,7 +551,8 @@ awful.rules.rules = {
           "feh",
           "mpv",
           "qjackctl",
-	  "alacritty",
+          "alacritty",
+          "Pavucontrol",
           "xtightvncviewer"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
