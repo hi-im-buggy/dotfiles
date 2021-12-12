@@ -3,3 +3,5 @@ if [ -n "$TMUX" ]; then
 else
     export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 fi
+
+export PATH="~/.tmux/plugins/tmux-nvr/bin/:$PATH"
