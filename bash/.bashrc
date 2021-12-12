@@ -11,6 +11,7 @@ files=(
 	/usr/share/fzf/key-bindings.bash
 	/usr/share/fzf/completion.bash
 	~/.fzf.bash
+	~/.tmux-nvr-setup.bash
 )
 
 # NOTE:

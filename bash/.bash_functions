@@ -4,9 +4,11 @@ wal-scale() {
     nitrogen --set-scaled "$(< "${HOME}/.cache/wal/wal")"
 }
 
-nv() {
-	nvr "$@" && tmux attach -t neovim
-}
+
+# Maintain one nvim process in each tmux session
+# nv() {
+#     nvr --servername "$("tmux display-message -p '#S'")" "$@"
+# }
 
 # PDF Page Extract
 function pdfpextr() {
