@@ -27,7 +27,6 @@ local rc = {}
 -- when client with a matching name is opened:
 local hotkeys_popup = require("awful.hotkeys_popup")
 
--- {{{ Variable definitions
 rc.vars = require("main.user-vars")
 
 terminal = rc.vars.terminal
@@ -35,85 +34,24 @@ editor = rc.vars.editor
 visual = rc.vars.visual
 
 modkey = rc.vars.modkey
--- }}}
 
 local main = {
-    layout = require("main.layout")
+    layout = require("main.layout"),
+	menu = require("main.menu")
 }
 
--- {{{ Menu
--- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", visual .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
-}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
--- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
 
 -- {{{ Wibar and Widgets
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
--- Create some widgets for use in the wibar
-
--- {{{ Volume widget
---}}}
---
 -- Music player widget
-local now_playing = awful.widget.watch("playerctl metadata --format 'Now Playing: {{title}} - {{artist}}'", 1)
+local now_playing = require("widgets.now-playing")
 
 -- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
-
-local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c:emit_signal(
-                                                      "request::activate",
-                                                      "tasklist",
-                                                      {raise = true}
-                                                  )
-                                              end
-                                          end),
-                     awful.button({ }, 3, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+local taglist = require("widgets.taglist")
+local tasklist = require("widgets.tasklist")
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -149,55 +87,19 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 4, function () main.layout.inc( 1) end),
                            awful.button({ }, 5, function () main.layout.inc(-1) end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
-        screen  = s,
-        filter  = awful.widget.taglist.filter.noempty,
-        buttons = taglist_buttons
-    }
+    s.mytaglist = taglist(s)
 
     -- Create a tasklist widget
-	s.mytasklist = awful.widget.tasklist {
-		screen   = s,
-		filter   = awful.widget.tasklist.filter.currenttags,
-		buttons  = tasklist_buttons,
-		layout   = {
-			spacing_widget = {
-				valign = 'center',
-				halign = 'center',
-				widget = wibox.container.place,
-			},
-			spacing = 1,
-			layout  = wibox.layout.fixed.horizontal
-		},
-		-- Notice that there is *NO* wibox.wibox prefix, it is a template,
-		-- not a widget instance.
-		widget_template = {
-			{
-				wibox.widget.base.make_widget(),
-				id            = 'background_role',
-				widget        = wibox.container.background,
-			},
-			{
-				{
-					id     = 'clienticon',
-					widget = awful.widget.clienticon,
-				},
-				margins = 2,
-				widget  = wibox.container.margin
-			},
-			nil,
-			create_callback = function(self, c, index, objects) --luacheck: no unused args
-				self:get_children_by_id('clienticon')[1].client = c
-			end,
-			layout = wibox.layout.align.vertical,
-		},
-	}
+	s.mytasklist = tasklist(s)
 
     -- Create the wibox
-	custom_shape = function(cr, width, height)
-		gears.shape.rounded_rect(cr, width, height, 0)
-	end
-	s.mywibox = awful.wibar({ position = "top", screen = s, shape = custom_shape})
+	s.mywibox = awful.wibar({
+		position = "top",
+		screen = s,
+		shape = function(cr, w, h)
+			gears.shape.rounded_rect(cr, w, h, 0)
+		end
+	})
 
     -- Create the systray
     s.systray = wibox.widget.systray()
@@ -229,12 +131,6 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
 end)
--- }}}
-
--- {{{ Mouse bindings
-root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end)
-))
 -- }}}
 
 -- {{{ Key bindings
