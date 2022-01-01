@@ -49,6 +49,9 @@ mytextclock = wibox.widget.textclock()
 -- Music player widget
 local now_playing = require("widgets.now-playing")
 
+-- Battery widget
+local battery_widget = require("widgets.battery")
+
 -- Create a wibox for each screen and add it
 local taglist = require("widgets.taglist")
 local tasklist = require("widgets.tasklist")
@@ -112,16 +115,20 @@ awful.screen.connect_for_each_screen(function(s)
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
-        { -- Left widgets
+        -- Left widgets
+		{
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
+		-- Middle widgets
+        s.mytasklist,
+        -- Right widgets
+		{
 	    spacing = 6,
 		layout = wibox.layout.fixed.horizontal,
 		now_playing,
+		battery_widget,
 		s.systray,
 		-- network,
 		volume,
