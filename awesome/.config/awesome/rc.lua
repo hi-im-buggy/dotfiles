@@ -52,6 +52,9 @@ local now_playing = require("widgets.now-playing")
 -- Battery widget
 local battery_widget = require("widgets.battery")
 
+-- Volume widget
+local volume_widget = require("widgets.volume")
+
 -- Create a wibox for each screen and add it
 local taglist = require("widgets.taglist")
 local tasklist = require("widgets.tasklist")
@@ -128,11 +131,10 @@ awful.screen.connect_for_each_screen(function(s)
 	    spacing = 6,
 		layout = wibox.layout.fixed.horizontal,
 		now_playing,
-		battery_widget,
 		s.systray,
 		-- network,
-		volume,
-		battery,
+		volume_widget,
+		battery_widget,
 		mytextclock,
 		s.mylayoutbox,
         },
