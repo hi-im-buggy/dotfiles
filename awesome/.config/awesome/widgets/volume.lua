@@ -7,7 +7,7 @@ local volume_widget = wibox.widget {
 		id     = "mycommandwatch",
 		widget = awful.widget.watch("pamixer --get-volume-human", 1, function(widget, stdout)
 			for line in stdout:gmatch("[^\r\n]+") do
-				widget:set_text("🔈" .. line)
+				widget:set_text("Vol: " .. line)
 			end
 		end),
 	},
