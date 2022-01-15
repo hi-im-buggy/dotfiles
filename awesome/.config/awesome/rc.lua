@@ -275,7 +275,7 @@ globalkeys = gears.table.join(
 
     -- Prompt
     awful.key({ modkey },            "r",     function ()
-		awful.util.spawn("rofi -show drun -fake-transparency")
+		awful.util.spawn("rofi -show combi -combi-modi \"window,drun,run\" -fake-transparency")
 	end, {description = "rofi", group = "rofi launcher"}),
 
     awful.key({ modkey }, "x",
