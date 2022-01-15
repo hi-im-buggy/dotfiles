@@ -26,11 +26,15 @@ local volume_widget = wibox.widget {
 			is_muted = true
 		end
 	end),
-	increase_volume = function()
-		awful.spawn.easy_async("pamixer --increase 5")
+	increase_volume = function(num)
+		return function()
+			awful.spawn.easy_async(("pamixer --increase %d"):format(num))
+		end
 	end,
-	decrease_volume = function()
-		awful.spawn.easy_async("pamixer --decrease 5")
+	decrease_volume = function(num)
+		return function()
+			awful.spawn.easy_async(("pamixer --decrease %d"):format(num))
+		end
 	end,
 	spawn_gui = function()
 		awful.util.spawn_with_shell("pavucontrol")
@@ -38,10 +42,18 @@ local volume_widget = wibox.widget {
 }
 
 volume_widget:buttons(gears.table.join(
+	-- Click to toggle mute
 	awful.button({ }, 1, volume_widget.toggle_mute),
+	-- Right click to open gui
 	awful.button({ }, 3, volume_widget.spawn_gui),
-	awful.button({ }, 4, volume_widget.increase_volume),
-	awful.button({ }, 5, volume_widget.decrease_volume)
+
+	-- Scroll to control volume
+	awful.button({ }, 4, volume_widget.increase_volume(5)),
+	awful.button({ }, 5, volume_widget.decrease_volume(5)),
+
+	-- Control gives finer volume control
+	awful.button({ "Control" }, 4, volume_widget.increase_volume(1)),
+	awful.button({ "Control" }, 5, volume_widget.decrease_volume(1))
 ))
 
 return volume_widget
