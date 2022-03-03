@@ -7,10 +7,24 @@ local volume_widget = wibox.widget {
 		id     = "mycommandwatch",
 		widget = awful.widget.watch("pamixer --get-volume-human", 1, function(widget, stdout)
 			for line in stdout:gmatch("[^\r\n]+") do
+				local icon = "Vol: "
 				if line:match("muted") then
-					line = "[ M ]"
+					line = "[M]"
+					icon = "婢 "
+				else
+					local num = tonumber(line:match("%d*"))
+					-- pamixer will give num in percentage, must convert
+					-- to raw int for comparisons
+					if num == 0 then
+						icon = "奄 "
+					elseif num <= 50 then
+						icon = "奔 "
+					else
+						icon = "墳 "
+					end
 				end
-				widget:set_text("Vol: " .. line)
+
+				widget:set_text(icon .. line)
 			end
 		end),
 	},

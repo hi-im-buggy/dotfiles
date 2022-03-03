@@ -21,7 +21,7 @@ local battery_widget = wibox.widget {
 	},
 	layout      = wibox.layout.stack,
 	set_battery = function(self, val, plug)
-		local symbol = 'Batt: '
+		local symbol = '  '
 		local plugged = ''
 		if tonumber(plug) == 1 then
 			plugged = '+'
