@@ -10,10 +10,12 @@
 (set nvim.o.updatetime 500)
 (set nvim.o.timeoutlen 500)
 (set nvim.o.sessionoptions "blank,curdir,folds,help,tabpages,winsize")
+(set nvim.o.listchars "tab:|->,trail:·")
 (set nvim.o.inccommand :split)
 (set nvim.o.clipboard :unnamedplus)
 
 (nvim.ex.set :list)
+(nvim.ex.set :nohlsearch)
 
 ;;; Mappings
 
@@ -30,7 +32,7 @@
   :Olical/conjure {}
   :Olical/nvim-local-fennel {}
   :PeterRincker/vim-argumentative {}
-  :lewis6991/gitsigns.nvim {}
+  :lewis6991/gitsigns.nvim {:mod :gitsigns}
   :beauwilliams/statusline.lua {:mod :statusline}
   :clojure-vim/clojure.vim {}
   :clojure-vim/vim-jack-in {}
@@ -44,7 +46,9 @@
   :marko-cerovac/material.nvim {:mod :material}
   :mbbill/undotree {:mod :undotree}
   :neovim/nvim-lspconfig {:mod :lspconfig}
-  :nvim-telescope/telescope.nvim {:mod :telescope :requires [[:nvim-lua/popup.nvim] [:nvim-lua/plenary.nvim]]}
+  :nvim-telescope/telescope.nvim {:mod :telescope
+                                  :requires [[:nvim-lua/popup.nvim]
+                                             [:nvim-lua/plenary.nvim]]}
   :radenling/vim-dispatch-neovim {}
   :tami5/compe-conjure {}
   :tpope/vim-abolish {}
