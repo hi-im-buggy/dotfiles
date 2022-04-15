@@ -34,9 +34,6 @@
   :PeterRincker/vim-argumentative {}
   :lewis6991/gitsigns.nvim {:mod :gitsigns}
   :beauwilliams/statusline.lua {:mod :statusline}
-  :clojure-vim/clojure.vim {}
-  :clojure-vim/vim-jack-in {}
-  :easymotion/vim-easymotion {}
   :folke/which-key.nvim {:mod :which-key}
   :guns/vim-sexp {:mod :sexp}
   :hrsh7th/nvim-compe {:mod :compe}
