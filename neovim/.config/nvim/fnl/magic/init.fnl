@@ -1,7 +1,8 @@
+;;; Based on [https://github.com/Olical/magic-kit]
 (module magic.init
   {autoload {plugin magic.plugin
-             nvim aniseed.nvim}})
-;;; Based on [https://github.com/Olical/magic-kit]
+             nvim aniseed.nvim
+             util magic.util}})
 
 ;;; Generic configuration
 
@@ -10,23 +11,23 @@
 (set nvim.o.updatetime 500)
 (set nvim.o.timeoutlen 500)
 (set nvim.o.sessionoptions "blank,curdir,folds,help,tabpages,winsize")
-(set nvim.o.listchars "tab:|->,trail:·")
+(set nvim.o.showbreak "↪ ")
+(set nvim.o.listchars "tab:» ,trail:·")
 (set nvim.o.inccommand :split)
 (set nvim.o.clipboard :unnamedplus)
 
 (nvim.ex.set :list)
 (nvim.ex.set :nohlsearch)
+(nvim.ex.set :number)
+(nvim.ex.set :smartcase)
 
 ;;; Mappings
 
 (set nvim.g.mapleader " ")
 (set nvim.g.maplocalleader "\\")
-
+(util.tnoremap :<Esc> :<C-\><C-n>)
 
 ;;; Plugins
-
-;; Run script/sync.sh to update, install and clean your plugins.
-;; Packer configuration format: https://github.com/wbthomason/packer.nvim
 (plugin.use
   :Olical/aniseed {}
   :Olical/conjure {}
@@ -37,7 +38,7 @@
   :folke/which-key.nvim {:mod :which-key}
   :guns/vim-sexp {:mod :sexp}
   :hrsh7th/nvim-compe {:mod :compe}
-  :jiangmiao/auto-pairs {:mod :auto-pairs}
+  :windwp/nvim-autopairs {:mod :autopairs}
   :lewis6991/impatient.nvim {}
   :psliwka/vim-smoothie {}
   :marko-cerovac/material.nvim {:mod :material}
@@ -59,5 +60,6 @@
   :tpope/vim-surround {}
   :tpope/vim-unimpaired {}
   :tpope/vim-vinegar {}
+  :github/copilot.vim {}
   :wbthomason/packer.nvim {}
   )

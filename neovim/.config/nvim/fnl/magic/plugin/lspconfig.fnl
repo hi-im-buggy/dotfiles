@@ -8,6 +8,8 @@
 (let [(ok? lsp) (pcall #(require :lspconfig))]
   (when ok?
     (lsp.clojure_lsp.setup {})
+    (lsp.clangd.setup {})
+    (lsp.pyright.setup {})
     (lsp.tsserver.setup {})
     (lsp.sumneko_lua.setup
       {:cmd ["lua-language-server"]
