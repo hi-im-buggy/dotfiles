@@ -9,8 +9,12 @@
        {:vimgrep_arguments ["rg" "--color=never" "--no-heading"
                             "--with-filename" "--line-number" "--column"
                             "--smart-case" "--hidden" "--follow"
-                            "-g" "!.git/"]}})
-
+                            "-g" "!.git/"]}
+       :extensions {:fzf {:fuzzy true
+                          :override_generic_sorter true
+                          :override_file_sorter true
+                          :case_mode :smart_case}}})
+    (telescope.load_extension :fzf)
     (util.lnnoremap :ff "Telescope find_files hidden=true")
     (util.lnnoremap :f- "Telescope file_browser")
     (util.lnnoremap :fg "Telescope live_grep")
@@ -30,4 +34,3 @@
     (util.lnnoremap :fsr "Telescope lsp_references")
     (util.lnnoremap :fsS "Telescope lsp_document_symbols")
     (util.lnnoremap :fss "Telescope lsp_workspace_symbols")))
-

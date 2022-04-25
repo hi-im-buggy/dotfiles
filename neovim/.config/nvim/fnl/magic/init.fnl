@@ -15,6 +15,8 @@
 (set nvim.o.listchars "tab:» ,trail:·")
 (set nvim.o.inccommand :split)
 (set nvim.o.clipboard :unnamedplus)
+(set nvim.o.grepprg "rg --vimgrep --smart-case --hidden")
+(set nvim.o.grepformat "%f:%l:%c:%m")
 
 (nvim.ex.set :list)
 (nvim.ex.set :nohlsearch)
@@ -47,6 +49,7 @@
   :nvim-telescope/telescope.nvim {:mod :telescope
                                   :requires [[:nvim-lua/popup.nvim]
                                              [:nvim-lua/plenary.nvim]]}
+  :nvim-telescope/telescope-fzf-native.nvim {:run :make}
   :radenling/vim-dispatch-neovim {}
   :tami5/compe-conjure {}
   :tpope/vim-abolish {}
@@ -60,6 +63,7 @@
   :tpope/vim-surround {}
   :tpope/vim-unimpaired {}
   :tpope/vim-vinegar {}
+  :elihunter173/dirbuf.nvim {:mod :dirbuf}
   :github/copilot.vim {}
   :wbthomason/packer.nvim {}
   )
