@@ -3,5 +3,4 @@
 
 (let [(ok? dirbuf) (pcall #(require :dirbuf))]
   (when ok?
-    (dirbuf.setup {:hash_first false
-                   :sort_order :directories_first})))
+    (dirbuf.setup {:sort_order :directories_first})))

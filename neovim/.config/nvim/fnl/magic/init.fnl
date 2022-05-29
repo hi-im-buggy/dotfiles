@@ -18,10 +18,14 @@
 (set nvim.o.grepprg "rg --vimgrep --smart-case --hidden")
 (set nvim.o.grepformat "%f:%l:%c:%m")
 
-(nvim.ex.set :list)
-(nvim.ex.set :nohlsearch)
-(nvim.ex.set :number)
-(nvim.ex.set :smartcase)
+(let [options [:list
+               :nohlsearch
+               :number
+               :ignorecase
+               :smartcase
+               :title]]
+  ( each [ _ opt (ipairs options)]
+    (nvim.ex.set opt)))
 
 ;;; Mappings
 
@@ -35,8 +39,14 @@
   :Olical/conjure {}
   :Olical/nvim-local-fennel {}
   :PeterRincker/vim-argumentative {}
-  :lewis6991/gitsigns.nvim {:mod :gitsigns}
-  :beauwilliams/statusline.lua {:mod :statusline}
+  :lewis6991/gitsigns.nvim {:mod :gitsigns
+                            :run ":UpdateRemotePlugins"}
+  :nvim-lualine/lualine.nvim {:mod :lualine
+                              :requires [[:kyazdani42/nvim-web-devicons]]}
+  :nvim-treesitter/nvim-treesitter {:mod :treesitter
+                                    :run ":TSUpdate"}
+  :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
+  :nvim-orgmode/orgmode {:mod :orgmode}
   :folke/which-key.nvim {:mod :which-key}
   :guns/vim-sexp {:mod :sexp}
   :hrsh7th/nvim-compe {:mod :compe}
@@ -44,6 +54,7 @@
   :lewis6991/impatient.nvim {}
   :psliwka/vim-smoothie {}
   :marko-cerovac/material.nvim {:mod :material}
+  :NLKNguyen/papercolor-theme {}
   :mbbill/undotree {:mod :undotree}
   :neovim/nvim-lspconfig {:mod :lspconfig}
   :nvim-telescope/telescope.nvim {:mod :telescope

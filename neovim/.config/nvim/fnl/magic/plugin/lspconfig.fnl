@@ -25,6 +25,6 @@
     (map :<c-p> "lua vim.diagnostic.goto_prev()")
     (map :<c-n> "lua vim.diagnostic.goto_next()")
 
-    (map :<leader>e "lua vim.lsp.diagnostic.show_line_diagnostics()")
+    (map :<leader>e "lua vim.diagnostic.open_float()")
     (map :<leader>lr "lua vim.lsp.buf.rename()")
     (map :<leader>lf "lua vim.lsp.buf.formatting()")))
