@@ -47,6 +47,7 @@
                                     :run ":TSUpdate"}
   :lukas-reineke/indent-blankline.nvim {:mod :indent-blankline}
   :nvim-orgmode/orgmode {:mod :orgmode}
+  :lukas-reineke/headlines.nvim {:mod :headlines}
   :folke/which-key.nvim {:mod :which-key}
   :guns/vim-sexp {:mod :sexp}
   :hrsh7th/nvim-compe {:mod :compe}
