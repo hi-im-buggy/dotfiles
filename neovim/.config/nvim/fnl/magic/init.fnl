@@ -23,7 +23,9 @@
                :number
                :ignorecase
                :smartcase
-               :title]]
+               :title
+               :noswapfile
+               :autoread]]
   ( each [ _ opt (ipairs options)]
     (nvim.ex.set opt)))
 
