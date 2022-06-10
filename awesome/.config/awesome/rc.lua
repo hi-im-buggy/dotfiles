@@ -211,11 +211,23 @@ globalkeys = gears.table.join(
 	{description = "increase keyboard backlight", group = "laptop"}),
 	
     -- Volume
-    awful.key({			}, "XF86AudioLowerVolume", function ()
+    awful.key({	modkey,	"Shift"	}, "[", function ()
 	awful.util.spawn("pactl set-sink-volume %s -5%%") end,
 	{description = "decrease audio volume", group = "laptop"}),
     awful.key({			}, "XF86AudioRaiseVolume", function ()
 	awful.util.spawn("pactl set-sink-volume %s +5%%") end,
+	{description = "increase audio volume", group = "laptop"}),
+
+    awful.key({	modkey,	"Shift"	}, "]", function ()
+	awful.util.spawn("pactl set-sink-volume %s -5%%") end,
+	{description = "decrease audio volume", group = "laptop"}),
+    awful.key({			}, "XF86AudioRaiseVolume", function ()
+	awful.util.spawn("pactl set-sink-volume %s +5%%") end,
+	{description = "increase audio volume", group = "laptop"}),
+
+    -- Media player
+    awful.key({	modkey,	"Shift"	}, "p", function ()
+	awful.util.spawn("playerctl play-pause") end,
 	{description = "increase audio volume", group = "laptop"}),
 
     -- Layout manipulation
