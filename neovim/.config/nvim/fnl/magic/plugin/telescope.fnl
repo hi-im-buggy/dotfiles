@@ -29,6 +29,7 @@
     (util.lnnoremap :fC "Telescope command_history")
     (util.lnnoremap :fq "Telescope quickfix")
     (util.lnnoremap :fl "Telescope loclist")
+    (util.lnnoremap :fo "lua require(\"telescope.builtin\").live_grep({cwd=\"~/org\"})")
     (util.lnnoremap :fsa "Telescope lsp_code_actions")
     (util.lnnoremap :fsi "Telescope lsp_implementations")
     (util.lnnoremap :fsr "Telescope lsp_references")
