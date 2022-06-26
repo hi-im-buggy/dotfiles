@@ -78,6 +78,5 @@
   :tpope/vim-unimpaired {}
   :tpope/vim-vinegar {}
   :elihunter173/dirbuf.nvim {:mod :dirbuf}
-  :github/copilot.vim {}
   :wbthomason/packer.nvim {}
   )
