@@ -5,7 +5,6 @@
              util magic.util}})
 
 ;;; Generic configuration
-
 (set nvim.o.termguicolors true)
 (set nvim.o.mouse "a")
 (set nvim.o.updatetime 500)
@@ -20,7 +19,7 @@
 
 (let [options [:list
                :nohlsearch
-               :number
+               :nonumber
                :ignorecase
                :smartcase
                :title
@@ -30,7 +29,6 @@
     (nvim.ex.set opt)))
 
 ;;; Mappings
-
 (set nvim.g.mapleader " ")
 (set nvim.g.maplocalleader "\\")
 (util.tnoremap :<Esc> :<C-\><C-n>)
@@ -60,6 +58,8 @@
   :NLKNguyen/papercolor-theme {}
   :mbbill/undotree {:mod :undotree}
   :neovim/nvim-lspconfig {:mod :lspconfig}
+  :glepnir/lspsaga.nvim {:mod :lspsaga
+                         :branch :main}
   :nvim-telescope/telescope.nvim {:mod :telescope
                                   :requires [[:nvim-lua/popup.nvim]
                                              [:nvim-lua/plenary.nvim]]}
