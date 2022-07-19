@@ -64,6 +64,7 @@
                                   :requires [[:nvim-lua/popup.nvim]
                                              [:nvim-lua/plenary.nvim]]}
   :nvim-telescope/telescope-fzf-native.nvim {:run :make}
+  :sindrets/winshift.nvim {:mod :winshift}
   :radenling/vim-dispatch-neovim {}
   :tami5/compe-conjure {}
   :tpope/vim-abolish {}
