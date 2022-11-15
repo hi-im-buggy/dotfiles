@@ -9,9 +9,9 @@ local meta = {}
 beautiful.init("/home/buggy/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal, editor, and visual editor to run.
-meta.terminal = os.getenv("TERMINAL") or "/usr/bin/kitty"
-meta.editor = os.getenv("EDITOR") or "/user/bin/kitty"
-meta.visual = os.getenv("VISUAL") or (terminal .. "-e" .. editor)
+meta.terminal = os.getenv("TERMINAL") or "/usr/bin/st"
+meta.editor = os.getenv("EDITOR") or "/user/bin/nvim"
+meta.visual = os.getenv("VISUAL") or (meta.terminal .. "-e" .. meta.editor)
 
 -- Default modkey
 meta.modkey = "Mod4"

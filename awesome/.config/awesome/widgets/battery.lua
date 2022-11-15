@@ -21,12 +21,21 @@ local battery_widget = wibox.widget {
 	},
 	layout      = wibox.layout.stack,
 	set_battery = function(self, val, plug)
+		local numval = tonumber(val)
 		local symbol = '  '
 		local plugged = ''
 		if tonumber(plug) == 1 then
 			plugged = '+'
 		end
-		self.mytextbox.markup = symbol .. tonumber(val) .. plugged .. "%"
+
+		local pre = ""
+		local post = ""
+		if numval < 15 then
+			pre = "<span color=\"#e01414\">"
+			post = "</span>"
+		end
+
+		self.mytextbox.markup = pre .. symbol .. numval .. plugged .. "%" .. post
 		-- self.myprogressbar.value  = tonumber(val)
 	end,
 }
