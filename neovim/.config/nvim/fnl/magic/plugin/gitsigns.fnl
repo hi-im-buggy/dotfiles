@@ -7,5 +7,7 @@
     (gitsigns.setup {})
     (util.lnnoremap :hp "Gitsigns preview_hunk")
     (util.lnnoremap :hr "Gitsigns reset_hunk")
+    (util.lnnoremap :hs "Gitsigns stage_hunk")
+    (util.lnnoremap :hv "Gitsigns select_hunk")
     (util.nnoremap "]h" "Gitsigns next_hunk")
     (util.nnoremap "[h" "Gitsigns prev_hunk")))

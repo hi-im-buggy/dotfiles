@@ -7,7 +7,7 @@
 (let [(ok? saga) (pcall #(require :lspsaga))]
   (when ok?
     (saga.init_lsp_saga {:border_style :rounded
-                         :code_action_icon :λ})
+                         :code_action_icon :☯})
     ;; bindings
     (let [finder (. (require :lspsaga.finder) :lsp_finder)
           hover_doc (. (require :lspsaga.hover) :render_hover_doc)

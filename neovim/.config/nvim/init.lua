@@ -25,7 +25,7 @@ ensure("wbthomason", "packer.nvim")
 
 -- Aniseed compiles our Fennel code to Lua and loads it automatically.
 ensure("Olical", "aniseed")
-
+--
 -- Enable Aniseed's automatic compilation and loading of Fennel source code.
 -- Aniseed looks for this when it's loaded then loads the rest of your
 -- configuration if it's set.

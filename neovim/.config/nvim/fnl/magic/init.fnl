@@ -32,6 +32,8 @@
 (set nvim.g.mapleader " ")
 (set nvim.g.maplocalleader "\\")
 (util.tnoremap :<Esc> :<C-\><C-n>)
+(util.lnnoremap :q ":copen<CR>")
+(util.lnnoremap :Q ":cclose<CR>")
 
 ;;; Plugins
 (plugin.use
@@ -55,11 +57,14 @@
   :lewis6991/impatient.nvim {}
   :psliwka/vim-smoothie {}
   :marko-cerovac/material.nvim {:mod :material}
+  :rakr/vim-one {}
+  :catppuccin/nvim {:mod :catppuccin}
   :NLKNguyen/papercolor-theme {}
   :mbbill/undotree {:mod :undotree}
   :neovim/nvim-lspconfig {:mod :lspconfig}
   :glepnir/lspsaga.nvim {:mod :lspsaga
                          :branch :main}
+  :kevinhwang91/nvim-bqf {}
   :nvim-telescope/telescope.nvim {:mod :telescope
                                   :requires [[:nvim-lua/popup.nvim]
                                              [:nvim-lua/plenary.nvim]]}
