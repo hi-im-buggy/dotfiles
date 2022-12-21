@@ -16,6 +16,7 @@
 (set nvim.o.clipboard :unnamedplus)
 (set nvim.o.grepprg "rg --vimgrep --smart-case --hidden")
 (set nvim.o.grepformat "%f:%l:%c:%m")
+(set nvim.o.formatoptions "l")
 
 (let [options [:list
                :nohlsearch
@@ -24,6 +25,7 @@
                :smartcase
                :title
                :noswapfile
+               :linebreak
                :autoread]]
   ( each [ _ opt (ipairs options)]
     (nvim.ex.set opt)))
