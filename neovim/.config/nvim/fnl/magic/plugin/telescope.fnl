@@ -9,12 +9,8 @@
        {:vimgrep_arguments ["rg" "--color=never" "--no-heading"
                             "--with-filename" "--line-number" "--column"
                             "--smart-case" "--hidden" "--follow"
-                            "-g" "!.git/"]}
-       :extensions {:fzf {:fuzzy true
-                          :override_generic_sorter true
-                          :override_file_sorter true
-                          :case_mode :smart_case}}})
-    (telescope.load_extension :fzf)
+                            "-g" "!.git/"]}})
+
     (util.lnnoremap :ff "Telescope find_files hidden=true")
     (util.lnnoremap :f- "Telescope file_browser")
     (util.lnnoremap :fg "Telescope live_grep")
@@ -25,17 +21,13 @@
     (util.lnnoremap :fM "Telescope marks")
     (util.lnnoremap :fh "Telescope oldfiles")
     (util.lnnoremap :ft "Telescope filetypes")
-    (util.lnnoremap :fT "Telescope treesitter")
     (util.lnnoremap :fc "Telescope commands")
     (util.lnnoremap :fC "Telescope command_history")
     (util.lnnoremap :fq "Telescope quickfix")
     (util.lnnoremap :fl "Telescope loclist")
-    (util.lnnoremap :fo "lua require(\"telescope.builtin\").live_grep({cwd=\"~/org\"})")
     (util.lnnoremap :fsa "Telescope lsp_code_actions")
     (util.lnnoremap :fsi "Telescope lsp_implementations")
     (util.lnnoremap :fsr "Telescope lsp_references")
     (util.lnnoremap :fsS "Telescope lsp_document_symbols")
-    (util.lnnoremap :fss "Telescope lsp_workspace_symbols")
-    (util.lnnoremap :/ "Telescope current_buffer_fuzzy_find")
-    (util.lnnoremap :fgc "Telescope git_commits")
-    (util.lnnoremap :fgf "Telescope git_files")))
+    (util.lnnoremap :fss "Telescope lsp_workspace_symbols")))
+

@@ -1,25 +1,27 @@
-(module magic.plugin.lspconfig)
+(module magic.plugin.lspconfig
+  {autoload {util magic.util
+             nvim aniseed.nvim}})
 
-;; 'from' is a string, 'to' is a function
-(defn- nmap [from to]
-  (vim.keymap.set :n from to))
+(defn- map [from to]
+  (util.nnoremap from to))
 
 (let [(ok? lsp) (pcall #(require :lspconfig))]
   (when ok?
     (lsp.clojure_lsp.setup {})
-    (lsp.clangd.setup {})
-    (lsp.pyright.setup {})
     (lsp.tsserver.setup {})
     (lsp.sumneko_lua.setup
       {:cmd ["lua-language-server"]
        :settings {:Lua {:telemetry {:enable false}}}})
 
     ;; https://www.chrisatmachine.com/Neovim/27-native-lsp/
-    (nmap :gd vim.lsp.buf.definition)
-    (nmap :gD vim.lsp.buf.declaration)
-    (nmap :gr vim.lsp.buf.references)
-    (nmap :gi vim.lsp.buf.implementation)
-    (nmap :<c-k> vim.lsp.buf.signature_help)
-    (nmap :<c-p> vim.diagnostic.goto_prev)
-    (nmap :<c-n> vim.diagnostic.goto_next)
-    (nmap :<leader>lf vim.lsp.buf.formatting)))
+    (map :gd "lua vim.lsp.buf.definition()")
+    (map :gD "lua vim.lsp.buf.declaration()")
+    (map :gr "lua vim.lsp.buf.references()")
+    (map :gi "lua vim.lsp.buf.implementation()")
+    (map :K "lua vim.lsp.buf.hover()")
+    (map :<c-k> "lua vim.lsp.buf.signature_help()")
+    (map :<c-p> "lua vim.diagnostic.goto_prev()")
+    (map :<c-n> "lua vim.diagnostic.goto_next()")
+
+    (map :<leader>lr "lua vim.lsp.buf.rename()")
+    (map :<leader>lf "lua vim.lsp.buf.formatting()")))
