@@ -23,8 +23,10 @@
 (set nvim.o.timeoutlen 500)
 (set nvim.o.sessionoptions "blank,curdir,folds,help,tabpages,winsize")
 (set nvim.o.inccommand :split)
+(set nvim.o.grepprg "rg --vimgrep --smart-case --hidden")
+(set nvim.o.grepformat "%f:%l:%c:%m")
 
-(nvim.ex.set :spell)
+(nvim.ex.set :nospell)
 (nvim.ex.set :list)
 
 
@@ -32,6 +34,10 @@
 
 (set nvim.g.mapleader " ")
 (set nvim.g.maplocalleader ",")
+;; Deal with the 'sticky' shift key, the common error when the left shift key
+;; is pressed for too long when typing the : (colon key)
+(nvim.create_user_command "W" "w" {})
+(nvim.create_user_command "Wq" "wq" {})
 
 
 ;;; Plugins
@@ -44,7 +50,8 @@
   :Olical/nvim-local-fennel {}
   :PaterJason/cmp-conjure {}
   :PeterRincker/vim-argumentative {}
-  :airblade/vim-gitgutter {}
+  :nvim-treesitter/nvim-treesitter {:do ":TSUpdate"}
+  :lewis6991/gitsigns.nvim {}
   :clojure-vim/clojure.vim {}
   :clojure-vim/vim-jack-in {}
   :folke/which-key.nvim {:mod :which-key}
